@@ -44,7 +44,7 @@ LifeOS 通过自动化的方式捕获这些"元信息"，让个人生产力管�
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/your-username/lifeos.git
+git clone https://github.com/huangf06/lifeos.git
 cd lifeos
 
 # 2. 运行安装脚本
