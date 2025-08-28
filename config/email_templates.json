@@ -1,0 +1,64 @@
+{
+  "templates": {
+    "default": {
+      "name": "默认模板",
+      "subject": {
+        "single_task": "{task_name}",
+        "multiple_tasks_same_project": "{project}任务 ({task_count}项)",
+        "multiple_tasks_mixed": "今日计划 ({task_count}项任务)"
+      },
+      "body": {
+        "header": "任务清单：\n\n",
+        "high_priority_section": "🔥 高优先级任务：\n",
+        "medium_priority_section": "📋 常规任务：\n",
+        "task_format": "{number}. {name}\n   项目：{project} | 预计：{time}分钟\n\n",
+        "footer": "总预计时间：{total_hours}小时{total_minutes}分钟\n生成时间：{timestamp}"
+      }
+    },
+    "simple": {
+      "name": "简洁模板",
+      "subject": {
+        "single_task": "{task_name}",
+        "multiple_tasks_same_project": "{project} ({task_count}项)",
+        "multiple_tasks_mixed": "任务清单 ({task_count}项)"
+      },
+      "body": {
+        "header": "",
+        "high_priority_section": "🚨 重要：\n",
+        "medium_priority_section": "",
+        "task_format": "• {name} ({time}min)\n",
+        "footer": "\n⏱ 总计 {total_minutes}分钟"
+      }
+    },
+    "detailed": {
+      "name": "详细模板", 
+      "subject": {
+        "single_task": "📋 {task_name}",
+        "multiple_tasks_same_project": "📂 {project}项目 - {task_count}个任务",
+        "multiple_tasks_mixed": "📅 {date} 任务计划 ({task_count}项)"
+      },
+      "body": {
+        "header": "📋 今日任务详细清单\n生成时间：{timestamp}\n\n",
+        "high_priority_section": "🔥🔥 高优先级任务（请优先完成）：\n",
+        "medium_priority_section": "📝 常规任务：\n",
+        "task_format": "{number}. 【{project}】{name}\n   ⏰ 预计用时：{time}分钟\n   📊 优先级：{priority}\n\n",
+        "footer": "═══════════════════════\n⏱️ 总预计时间：{total_hours}小时{total_minutes}分钟\n📅 建议完成时间：{suggested_time}\n🎯 加油完成今日目标！"
+      }
+    }
+  },
+  "default_template": "default",
+  "variables": {
+    "task_name": "任务名称",
+    "project": "项目名称", 
+    "task_count": "任务数量",
+    "number": "序号",
+    "name": "任务名",
+    "time": "预计时间",
+    "priority": "优先级",
+    "total_hours": "总小时数",
+    "total_minutes": "总分钟数",
+    "timestamp": "生成时间戳",
+    "date": "日期",
+    "suggested_time": "建议完成时间"
+  }
+}

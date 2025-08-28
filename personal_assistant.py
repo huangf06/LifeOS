@@ -15,9 +15,42 @@ class PersonalAssistant:
     def __init__(self, lifeos_path="~/LifeOS"):
         self.lifeos_path = Path(lifeos_path).expanduser()
         self.data_path = self.lifeos_path / "data"
+        self.config_path = self.lifeos_path / "config"
         
         # 确保目录存在
         self.data_path.mkdir(parents=True, exist_ok=True)
+        self.config_path.mkdir(parents=True, exist_ok=True)
+        
+        # 加载邮件模板
+        self.email_templates = self.load_email_templates()
+        
+    def load_email_templates(self):
+        """加载邮件模板配置"""
+        template_file = self.config_path / "email_templates.json"
+        if template_file.exists():
+            with open(template_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        else:
+            # 默认模板
+            return {
+                "templates": {
+                    "default": {
+                        "subject": {
+                            "single_task": "{task_name}",
+                            "multiple_tasks_same_project": "{project}任务 ({task_count}项)",
+                            "multiple_tasks_mixed": "今日计划 ({task_count}项任务)"
+                        },
+                        "body": {
+                            "header": "任务清单：\n\n",
+                            "high_priority_section": "🔥 高优先级任务：\n",
+                            "medium_priority_section": "📋 常规任务：\n",
+                            "task_format": "{number}. {name}\n   项目：{project} | 预计：{time}分钟\n\n",
+                            "footer": "总预计时间：{total_hours}小时{total_minutes}分钟\n生成时间：{timestamp}"
+                        }
+                    }
+                },
+                "default_template": "default"
+            }
         
     def parse_user_input(self, user_input):
         """
@@ -137,14 +170,14 @@ class PersonalAssistant:
         
         return plan, tasks
     
-    def send_to_omnifocus(self, tasks, method="email"):
+    def send_to_omnifocus(self, tasks, method="email", create_subtasks=False, template="default"):
         """发送任务到OmniFocus"""
         if method == "applescript":
             return self._send_via_applescript(tasks)
         elif method == "url":
             return self._send_via_url_scheme(tasks)
         elif method == "email":
-            return self._send_via_email(tasks)
+            return self._send_via_email(tasks, create_subtasks=create_subtasks, template=template)
         else:
             return self._generate_email_format(tasks)
     
@@ -195,7 +228,7 @@ class PersonalAssistant:
         except Exception as e:
             return f"❌ 执行失败: {e}"
     
-    def _send_via_email(self, tasks):
+    def _send_via_email(self, tasks, create_subtasks=False, template="default"):
         """通过邮件发送任务"""
         try:
             # 导入邮件发送模块
@@ -203,56 +236,140 @@ class PersonalAssistant:
             
             sender = EmailSender()
             
-            # 转换任务格式
-            email_tasks = []
-            for task in tasks:
-                email_task = {
-                    'name': task['name'],
-                    'body': f"项目: {task['project']}\n预计时间: {task['estimated_time']}分钟\n优先级: {task['priority']}"
-                }
-                email_tasks.append(email_task)
-            
-            # 创建主任务邮件
-            from datetime import datetime, date
-            today = date.today().strftime('%Y-%m-%d')
-            subject = f"LifeOS任务计划 - {today}"
-            
-            body = "今日任务清单（按优先级顺序执行）：\n\n"
-            
-            # 按优先级分组
-            high_tasks = [t for t in tasks if t['priority'] == 'high']
-            medium_tasks = [t for t in tasks if t['priority'] == 'medium']
-            
-            task_number = 1
-            
-            if high_tasks:
-                body += "🔥 高优先级任务：\n"
-                for task in high_tasks:
-                    body += f"{task_number}. {task['name']}\n"
-                    body += f"   项目：{task['project']} | 预计：{task['estimated_time']}分钟\n\n"
-                    task_number += 1
-            
-            if medium_tasks:
-                body += "📋 常规任务：\n" 
-                for task in medium_tasks:
-                    body += f"{task_number}. {task['name']}\n"
-                    body += f"   项目：{task['project']} | 预计：{task['estimated_time']}分钟\n\n"
-                    task_number += 1
-            
-            total_time = sum(task['estimated_time'] for task in tasks)
-            body += f"总预计时间：{total_time//60}小时{total_time%60}分钟\n"
-            body += f"生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M')}"
-            
-            # 发送邮件
-            if sender.send_single_email(subject, body):
-                return f"✅ 成功发送任务计划到 OmniFocus（包含 {len(tasks)} 项子任务）"
+            if create_subtasks and len(tasks) > 1:
+                return self._send_project_with_subtasks(sender, tasks)
             else:
-                return f"❌ 邮件发送失败，请检查邮件配置"
-                
+                return self._send_simple_task_list(sender, tasks, template)
+            
         except ImportError:
             return "❌ 邮件模块未找到，请检查 email_sender.py"
         except Exception as e:
             return f"❌ 邮件发送出错: {e}"
+    
+    def _send_project_with_subtasks(self, sender, tasks):
+        """发送带子任务的项目（多封邮件方式）"""
+        from datetime import datetime
+        
+        # 获取主要项目分类
+        main_project = max(set([t['project'] for t in tasks]), key=[t['project'] for t in tasks].count)
+        
+        # 创建主任务
+        main_subject = f"🎯 {main_project}项目"
+        main_body = f"这是一个包含 {len(tasks)} 个子任务的项目：\n\n"
+        
+        for i, task in enumerate(tasks, 1):
+            main_body += f"  {i}. {task['name']}\n"
+            main_body += f"     ⏰ 预计 {task['estimated_time']} 分钟\n\n"
+        
+        total_time = sum(task['estimated_time'] for task in tasks)
+        main_body += f"总计用时：{total_time//60}小时{total_time%60}分钟\n"
+        main_body += f"生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n"
+        main_body += "📋 各子任务将单独发送，请在OmniFocus中将它们移到此项目下"
+        
+        # 发送主任务
+        if not sender.send_single_email(main_subject, main_body):
+            return "❌ 主任务发送失败"
+        
+        # 发送子任务
+        success_count = 1  # 主任务已成功
+        for i, task in enumerate(tasks, 1):
+            sub_subject = f"├─ {task['name']}"
+            sub_body = f"【{main_project}项目 - 子任务 {i}】\n\n"
+            sub_body += f"项目：{task['project']}\n"
+            sub_body += f"预计时间：{task['estimated_time']}分钟\n"
+            sub_body += f"优先级：{task['priority']}\n\n"
+            sub_body += f"请将此任务移动到「{main_subject}」项目下"
+            
+            if sender.send_single_email(sub_subject, sub_body):
+                success_count += 1
+        
+        return f"✅ 成功发送项目和 {success_count-1}/{len(tasks)} 个子任务到 OmniFocus"
+    
+    def _send_simple_task_list(self, sender, tasks, template_name=None):
+        """发送简单任务列表（使用模板）"""
+        from datetime import datetime
+        
+        # 获取模板
+        template_name = template_name or self.email_templates.get("default_template", "default")
+        template = self.email_templates["templates"][template_name]
+        
+        # 生成标题
+        subject = self._generate_subject(tasks, template["subject"])
+        
+        # 生成邮件正文
+        body = self._generate_body(tasks, template["body"])
+        
+        # 发送邮件
+        if sender.send_single_email(subject, body):
+            return f"✅ 成功发送任务计划到 OmniFocus（包含 {len(tasks)} 项任务）"
+        else:
+            return f"❌ 邮件发送失败，请检查邮件配置"
+    
+    def _generate_subject(self, tasks, subject_template):
+        """生成邮件标题"""
+        if len(tasks) == 1:
+            return subject_template["single_task"].format(task_name=tasks[0]['name'])
+        else:
+            projects = list(set([t['project'] for t in tasks]))
+            if len(projects) == 1:
+                return subject_template["multiple_tasks_same_project"].format(
+                    project=projects[0], task_count=len(tasks)
+                )
+            else:
+                return subject_template["multiple_tasks_mixed"].format(task_count=len(tasks))
+    
+    def _generate_body(self, tasks, body_template):
+        """生成邮件正文"""
+        from datetime import datetime
+        
+        # 开始构建邮件正文
+        body = body_template["header"]
+        
+        # 按优先级分组
+        high_tasks = [t for t in tasks if t['priority'] == 'high']
+        medium_tasks = [t for t in tasks if t['priority'] == 'medium']
+        
+        task_number = 1
+        
+        # 高优先级任务
+        if high_tasks:
+            body += body_template["high_priority_section"]
+            for task in high_tasks:
+                body += body_template["task_format"].format(
+                    number=task_number,
+                    name=task['name'],
+                    project=task['project'],
+                    time=task['estimated_time'],
+                    priority=task['priority']
+                )
+                task_number += 1
+        
+        # 中等优先级任务
+        if medium_tasks:
+            body += body_template["medium_priority_section"]
+            for task in medium_tasks:
+                body += body_template["task_format"].format(
+                    number=task_number,
+                    name=task['name'],
+                    project=task['project'],
+                    time=task['estimated_time'],
+                    priority=task['priority']
+                )
+                task_number += 1
+        
+        # 添加底部信息
+        total_time = sum(task['estimated_time'] for task in tasks)
+        suggested_time = datetime.now().replace(hour=datetime.now().hour + total_time//60).strftime('%H:%M')
+        
+        body += body_template["footer"].format(
+            total_hours=total_time//60,
+            total_minutes=total_time%60,
+            timestamp=datetime.now().strftime('%Y-%m-%d %H:%M'),
+            date=datetime.now().strftime('%m-%d'),
+            suggested_time=suggested_time
+        )
+        
+        return body
 
     def _send_via_url_scheme(self, tasks):
         """生成URL Scheme链接"""
