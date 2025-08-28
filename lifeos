@@ -1,0 +1,58 @@
+#!/bin/bash
+# LifeOS Personal Assistant 快速启动脚本
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON_SCRIPT="$SCRIPT_DIR/personal_assistant.py"
+
+# 检查参数
+if [ $# -eq 0 ]; then
+    echo "🤖 LifeOS Personal Assistant"
+    echo ""
+    echo "用法:"
+    echo "  lifeos 'your task description'"
+    echo "  lifeos stats    # 查看统计"
+    echo ""
+    echo "示例:"
+    echo "  lifeos '明天要开会，需要准备PPT和会议资料'"
+    echo "  lifeos '这周要完成项目报告，安排时间复习英语'"
+    exit 1
+fi
+
+# 特殊命令
+case "$1" in
+    "setup")
+        python3 "$SCRIPT_DIR/email_sender.py" setup
+        ;;
+    "test-email")
+        python3 "$SCRIPT_DIR/email_sender.py" test
+        ;;
+    "fitness")
+        python3 "$SCRIPT_DIR/email_sender.py" fitness
+        ;;
+    "stats")
+        python3 "$PYTHON_SCRIPT" --stats
+        ;;
+    "help")
+        echo "🤖 LifeOS Personal Assistant 帮助"
+        echo ""
+        echo "基础命令："
+        echo "  lifeos 'task description'  # 智能任务规划"
+        echo "  lifeos setup              # 设置邮件账户"
+        echo "  lifeos test-email         # 测试邮件发送"
+        echo "  lifeos fitness            # 发送健身计划"
+        echo "  lifeos stats              # 查看使用统计"
+        echo ""
+        echo "这是你的AI个人助理，可以："
+        echo "• 理解你的自然语言描述"
+        echo "• 生成结构化的任务计划" 
+        echo "• 自动发送任务到OmniFocus"
+        echo "• 跟踪任务历史和统计"
+        echo ""
+        echo "示例："
+        echo "  lifeos '明天要开会，需要准备PPT和资料'"
+        echo "  lifeos '这周完成项目报告，安排学习时间'"
+        ;;
+    *)
+        python3 "$PYTHON_SCRIPT" "$@"
+        ;;
+esac

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git rebase:*)",
+      "Bash(chmod:*)",
+      "Bash(./lifeos:*)",
+      "Bash(osascript:*)",
+      "Bash(python3:*)",
+      "Bash(pip3:*)",
+      "Read(/usr/lib/python3.10/email/mime/**)",
+      "Read(/root/LifeOS/config/**)",
+      "Read(/root/LifeOS/config/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
