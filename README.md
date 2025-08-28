@@ -13,6 +13,19 @@
 - AI驱动的任务规划对话
 - 灵活的任务导入方式（邮件/URL/AppleScript）
 - 与现有工作流的无缝集成
+- OmniFocus数据导出和状态同步
+
+## 测试脚本
+
+### OmniFocus导出验证
+```bash
+osascript test_omnifocus_export.scpt
+```
+
+### 完成任务追踪测试
+```bash
+osascript test_completed_tasks.scpt
+```
 
 ---
 
