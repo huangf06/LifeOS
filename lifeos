@@ -32,6 +32,32 @@ case "$1" in
     "stats")
         python3 "$PYTHON_SCRIPT" --stats
         ;;
+    # 生活追踪命令
+    "log")
+        python3 "$SCRIPT_DIR/logseq_tracker.py" log --category "$2" --content "$3" --rating "$4" --duration "$5"
+        ;;
+    "data")
+        python3 "$SCRIPT_DIR/logseq_tracker.py" data --type "$2" --value "$3"
+        ;;
+    "today")
+        python3 "$SCRIPT_DIR/logseq_tracker.py" init
+        ;;
+    "report")
+        python3 "$SCRIPT_DIR/logseq_tracker.py" report
+        ;;
+    "sync")
+        python3 "$SCRIPT_DIR/logseq_tracker.py" sync
+        ;;
+    # AI顾问命令
+    "analyze")
+        python3 "$SCRIPT_DIR/ai_advisor.py" analyze
+        ;;
+    "plan")
+        python3 "$SCRIPT_DIR/ai_advisor.py" plan
+        ;;
+    "advice")
+        python3 "$SCRIPT_DIR/ai_advisor.py" analyze
+        ;;
     "help")
         echo "🤖 LifeOS Personal Assistant 帮助"
         echo ""
@@ -41,6 +67,18 @@ case "$1" in
         echo "  lifeos test-email         # 测试邮件发送"
         echo "  lifeos fitness            # 发送健身计划"
         echo "  lifeos stats              # 查看使用统计"
+        echo ""
+        echo "生活追踪命令："
+        echo "  lifeos today              # 初始化今日记录模板"
+        echo "  lifeos log work '编程2小时' 8 '2h'  # 记录活动"
+        echo "  lifeos data mood 8        # 更新心情评分"
+        echo "  lifeos report             # 生成周报"
+        echo "  lifeos sync               # Git同步Logseq"
+        echo ""
+        echo "AI顾问命令："
+        echo "  lifeos analyze            # AI分析生活模式和建议"
+        echo "  lifeos plan               # 生成明日优化计划"
+        echo "  lifeos advice             # 获取AI生活建议"
         echo ""
         echo "这是你的AI个人助理，可以："
         echo "• 理解你的自然语言描述"

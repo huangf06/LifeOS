@@ -1,0 +1,160 @@
+{
+  "version": "1.0",
+  "created_date": "2025-08-30",
+  "title": "基于认知科学的超级执行机器时间表",
+  "description": "精确到分钟的科学化时间管理系统，优化认知负荷分配",
+  
+  "core_principles": {
+    "cognitive_load_matching": "认知负荷与时段匹配",
+    "task_switching_minimization": "任务切换最小化", 
+    "active_recovery": "主动恢复策略",
+    "circadian_optimization": "生物节律优化"
+  },
+
+  "daily_schedule": {
+    "05:45-06:00": {
+      "activity": "认知启动：冷水洗脸+5分钟冥想",
+      "cognitive_load": "minimal",
+      "purpose": "激活交感神经，提升多巴胺基线",
+      "color_code": "🟢"
+    },
+    "06:00-06:30": {
+      "activity": "生理激活：轻度有氧运动",
+      "cognitive_load": "low",
+      "purpose": "促进BDNF分泌，优化大脑血流",
+      "color_code": "🟢"
+    },
+    "06:30-08:00": {
+      "activity": "认知峰值A：算法编程刷题",
+      "cognitive_load": "maximum",
+      "purpose": "利用皮质醇峰值，最强逻辑推理",
+      "color_code": "🔴",
+      "break_points": ["07:15: 2分钟眼部运动+深呼吸"],
+      "adjustment_trigger": "错误率>15%立即休息"
+    },
+    "08:00-08:30": {
+      "activity": "主动恢复：早餐+轻音乐", 
+      "cognitive_load": "minimal",
+      "purpose": "DMN激活，记忆巩固",
+      "color_code": "🟢"
+    },
+    "08:30-10:30": {
+      "activity": "专业理论A：数学/统计/金融基础",
+      "cognitive_load": "high",
+      "purpose": "持续专注力最佳期",
+      "color_code": "🟠",
+      "break_points": ["09:15: 颈部拉伸+室外远眺"],
+      "adjustment_trigger": "理解力下降>20%切换内容"
+    },
+    "10:30-11:00": {
+      "activity": "认知切换：荷兰语词汇/发音",
+      "cognitive_load": "medium",
+      "purpose": "语言脑区激活，前额皮质休息", 
+      "color_code": "🟡"
+    },
+    "11:00-12:30": {
+      "activity": "专业理论B：ML/AI/量化进阶",
+      "cognitive_load": "high",
+      "purpose": "上午剩余专注力利用",
+      "color_code": "🟠",
+      "break_points": ["11:45: 3分钟站立+肩部活动"]
+    },
+    "12:30-13:30": {
+      "activity": "深度恢复：午餐+散步+社交",
+      "cognitive_load": "minimal", 
+      "purpose": "完全脱离认知任务",
+      "color_code": "🟢"
+    },
+    "13:30-15:30": {
+      "activity": "求职技能：面试准备+简历优化+岗位搜索",
+      "cognitive_load": "high",
+      "purpose": "下午专注力次峰值",
+      "color_code": "🟠",
+      "break_points": ["14:15: 轻度拉伸+补水"],
+      "note": "实用导向，输出明确"
+    },
+    "15:30-16:00": {
+      "activity": "身体激活：快步走+拉伸",
+      "cognitive_load": "low",
+      "purpose": "为第二认知峰值准备",
+      "color_code": "🟢"
+    },
+    "16:00-17:30": {
+      "activity": "认知峰值B：编程项目+系统设计",
+      "cognitive_load": "maximum",
+      "purpose": "傍晚创造力高峰，综合应用",
+      "color_code": "🔴",
+      "note": "一次性深度工作，不中断"
+    },
+    "17:30-18:30": {
+      "activity": "恢复用餐：晚餐+放松",
+      "cognitive_load": "minimal",
+      "purpose": "大脑完全脱离工作状态",
+      "color_code": "🟢"
+    },
+    "18:30-20:00": {
+      "activity": "语言强化：英语听说+情景对话", 
+      "cognitive_load": "medium",
+      "purpose": "晚间语言输出最佳时段",
+      "color_code": "🟡",
+      "break_points": ["19:15: 5分钟休息+眼部放松"]
+    },
+    "20:00-20:30": {
+      "activity": "整理巩固：当日总结+明日规划",
+      "cognitive_load": "medium",
+      "purpose": "低负荷反思，记忆整合",
+      "color_code": "🟡"
+    },
+    "20:30-22:00": {
+      "activity": "自由时间：娱乐/社交/个人事务",
+      "cognitive_load": "minimal",
+      "purpose": "心理减压，生活平衡",
+      "color_code": "🟢"
+    },
+    "22:00-05:45": {
+      "activity": "深度恢复：优质睡眠 7小时45分钟",
+      "cognitive_load": "zero", 
+      "purpose": "神经毒素清理，记忆固化",
+      "color_code": "💤"
+    }
+  },
+
+  "daily_stats": {
+    "maximum_cognitive_load_minutes": 210,
+    "high_cognitive_load_minutes": 330,
+    "medium_cognitive_load_minutes": 120,
+    "recovery_minutes": 285,
+    "sleep_minutes": 465,
+    "total_training_hours": 11,
+    "effective_learning_hours": 9
+  },
+
+  "monitoring_indicators": {
+    "real_time_adjustments": {
+      "attention_span_below_25min": "立即微恢复",
+      "efficiency_below_70percent": "降低难度或切换",
+      "consecutive_errors": "暂停并分析原因", 
+      "emotional_irritation": "增加5分钟恢复时间"
+    },
+    "daily_evaluation": {
+      "time_block_quality": "9个时间段完成质量评分(1-10)",
+      "cognitive_peak_efficiency": "3次认知峰值利用效率",
+      "recovery_effectiveness": "恢复期放松程度",
+      "overall_energy_state": "整体精力状态评分"
+    }
+  },
+
+  "adjustment_triggers": {
+    "fatigue_levels": {
+      "light_fatigue": "微恢复 + 降低10%难度",
+      "moderate_fatigue": "短恢复 + 切换任务类型",
+      "heavy_fatigue": "中恢复 + 提前结束当前块", 
+      "extreme_fatigue": "深恢复 + 次日减量50%"
+    },
+    "performance_indicators": {
+      "consecutive_2days_below_70percent": "降低强度，重新适应",
+      "weekly_poor_performance": "全面检讨和策略调整",
+      "physical_mental_discomfort": "立即休息调整"
+    }
+  }
+}

@@ -11,4 +11,20 @@ __pycache__/
 
 # 临时文件
 *.tmp
+*.bak
+*.old
+*~
 .DS_Store
+
+# 日志文件
+*.log
+
+# 环境变量文件
+.env
+.env.local
+
+# IDE文件
+.vscode/
+.idea/
+*.swp
+*.swo

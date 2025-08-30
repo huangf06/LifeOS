@@ -1,0 +1,202 @@
+{
+  "date": "YYYY-MM-DD",
+  "version_used": "v1.0.0",
+  "overall_completion_rate": 0.0,
+  "energy_level": 0,
+  "sleep_quality": 0,
+  "notes": "",
+  
+  "time_blocks": {
+    "05:45-06:00_cognitive_startup": {
+      "planned_activity": "认知启动：冷水洗脸+5分钟冥想",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "06:00-06:30_physical_activation": {
+      "planned_activity": "生理激活：轻度有氧运动",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "06:30-08:00_cognitive_peak_a": {
+      "planned_activity": "认知峰值A：算法编程刷题",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "problems_solved": 0,
+      "error_rate": 0.0,
+      "break_taken": false,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "08:00-08:30_active_recovery_1": {
+      "planned_activity": "主动恢复：早餐+轻音乐",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "08:30-10:30_theory_a": {
+      "planned_activity": "专业理论A：数学/统计/金融基础",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "topics_covered": [],
+      "comprehension_rate": 0.0,
+      "break_taken": false,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "10:30-11:00_cognitive_switch": {
+      "planned_activity": "认知切换：荷兰语词汇/发音",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "words_learned": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "11:00-12:30_theory_b": {
+      "planned_activity": "专业理论B：ML/AI/量化进阶",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "topics_covered": [],
+      "comprehension_rate": 0.0,
+      "break_taken": false,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "12:30-13:30_deep_recovery": {
+      "planned_activity": "深度恢复：午餐+散步+社交",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "recovery_effectiveness": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "13:30-15:30_job_skills": {
+      "planned_activity": "求职技能：面试准备+简历优化+岗位搜索",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "tasks_completed": [],
+      "applications_sent": 0,
+      "break_taken": false,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "15:30-16:00_body_activation": {
+      "planned_activity": "身体激活：快步走+拉伸",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "16:00-17:30_cognitive_peak_b": {
+      "planned_activity": "认知峰值B：编程项目+系统设计",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "projects_worked": [],
+      "breakthrough_moments": [],
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "17:30-18:30_recovery_meal": {
+      "planned_activity": "恢复用餐：晚餐+放松",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "recovery_effectiveness": 0,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "18:30-20:00_language_enhancement": {
+      "planned_activity": "语言强化：英语听说+情景对话",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "english_topics_practiced": [],
+      "speaking_confidence": 0,
+      "break_taken": false,
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "20:00-20:30_consolidation": {
+      "planned_activity": "整理巩固：当日总结+明日规划",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "key_learnings": [],
+      "tomorrow_priorities": [],
+      "notes": "",
+      "adjustments_made": ""
+    },
+    "20:30-22:00_free_time": {
+      "planned_activity": "自由时间：娱乐/社交/个人事务",
+      "completed": false,
+      "actual_duration_minutes": 0,
+      "quality_score": 0,
+      "activities": [],
+      "stress_level": 0,
+      "notes": "",
+      "adjustments_made": ""
+    }
+  },
+  
+  "cognitive_performance": {
+    "morning_peak_efficiency": 0,
+    "afternoon_peak_efficiency": 0,
+    "attention_span_average": 0,
+    "task_switching_effectiveness": 0,
+    "fatigue_onset_time": "",
+    "recovery_effectiveness": 0
+  },
+  
+  "three_goals_progress": {
+    "job_hunting": {
+      "technical_skills_hours": 0.0,
+      "job_search_hours": 0.0,
+      "interview_prep_hours": 0.0,
+      "applications_sent": 0,
+      "key_achievements": []
+    },
+    "language_skills": {
+      "english_hours": 0.0,
+      "dutch_hours": 0.0,
+      "speaking_practice_minutes": 0,
+      "listening_practice_minutes": 0,
+      "key_improvements": []
+    },
+    "fitness": {
+      "cardio_minutes": 0,
+      "strength_minutes": 0,
+      "flexibility_minutes": 0,
+      "energy_contribution_score": 0,
+      "physical_readiness": 0
+    }
+  },
+  
+  "adjustments_needed": {
+    "immediate_changes": [],
+    "weekly_changes": [],
+    "schedule_version_change_needed": false,
+    "reason_for_version_change": ""
+  },
+  
+  "tomorrow_preparation": {
+    "materials_prepared": [],
+    "priority_adjustments": [],
+    "energy_optimization_plan": "",
+    "potential_obstacles": []
+  }
+}

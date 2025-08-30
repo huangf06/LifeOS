@@ -13,7 +13,15 @@
       "Bash(pip3:*)",
       "Read(/usr/lib/python3.10/email/mime/**)",
       "Read(/root/LifeOS/config/**)",
-      "Read(/root/LifeOS/config/**)"
+      "Read(/root/LifeOS/config/**)",
+      "Bash(./setup_assistant.sh:*)",
+      "Bash(export CLAUDE_CODE_SESSION=true)",
+      "Read(/root/Documents/logseq/journals/**)",
+      "Read(/root/Documents/logseq/pages/**)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(tree:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []
