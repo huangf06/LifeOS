@@ -22,7 +22,10 @@
       "Bash(mv:*)",
       "Bash(tree:*)",
       "Bash(rm:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:www.imc.com)",
+      "Bash(brew install:*)",
+      "Bash(pandoc:*)"
     ],
     "deny": [],
     "ask": []
