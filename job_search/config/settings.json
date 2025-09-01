@@ -1,0 +1,43 @@
+{
+  "personal_info": {
+    "name": "Fei Huang",
+    "email": "huangf06@gmail.com",
+    "phone": "+31 645 038 614",
+    "location": "Amsterdam, Netherlands",
+    "linkedin": "https://linkedin.com/in/your-profile",
+    "github": "https://github.com/your-profile",
+    "availability": "August 2025"
+  },
+  "target_positions": [
+    "Quantitative Researcher",
+    "Quantitative Analyst", 
+    "Quantitative Developer",
+    "Data Scientist (Finance)",
+    "Risk Analyst"
+  ],
+  "target_companies": [
+    "IMC Trading",
+    "Optiver",
+    "Flow Traders",
+    "Da Vinci",
+    "Susquehanna",
+    "Jane Street",
+    "Two Sigma",
+    "Citadel",
+    "DE Shaw"
+  ],
+  "skills": {
+    "programming": ["Python", "MATLAB", "SQL", "R"],
+    "ml_frameworks": ["PyTorch", "TensorFlow", "scikit-learn"],
+    "finance": ["Time-series analysis", "Risk modeling", "Portfolio optimization", "Derivatives pricing"],
+    "tools": ["Git", "Docker", "Linux", "Hadoop", "Spark"],
+    "languages": ["English (Professional)", "Mandarin (Native)", "Dutch (Basic)"]
+  },
+  "resume_settings": {
+    "default_template": "quantitative",
+    "output_formats": ["pdf", "docx"],
+    "max_length_pages": 2,
+    "font_size": 11,
+    "margins": "1 inch"
+  }
+}

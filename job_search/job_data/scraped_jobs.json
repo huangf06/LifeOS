@@ -1,0 +1,22 @@
+{
+  "jobs": [
+    {
+      "id": "optiver_quantitative_trader_1756741354",
+      "company": "Optiver",
+      "title": "Quantitative Trader",
+      "location": "Amsterdam",
+      "salary_range": "€90,000 - €130,000",
+      "job_type": "Full-time",
+      "description": "",
+      "requirements": [],
+      "source_url": "https://optiver.com/careers",
+      "scraped_at": "2025-09-01T17:42:34.948338",
+      "status": "active",
+      "manually_added": true
+    }
+  ],
+  "metadata": {
+    "last_scraped": "2025-09-01T17:42:34.948351",
+    "total_jobs": 1
+  }
+}

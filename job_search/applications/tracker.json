@@ -1,0 +1,109 @@
+{
+  "applications": [
+    {
+      "id": "ad83aaec",
+      "company": "IMC Trading",
+      "position": "Graduate Quantitative Researcher",
+      "application_date": "2025-09-01",
+      "status": "draft",
+      "priority": "high",
+      "source": "company_website",
+      "resume_version": "",
+      "cover_letter": "",
+      "job_description": "",
+      "salary_range": "€80,000 - €120,000",
+      "timeline": {
+        "application_deadline": "",
+        "expected_response": "2025-09-15",
+        "interview_dates": []
+      },
+      "contacts": [],
+      "notes": "Top priority target company. Strong technical requirements.",
+      "feedback": "",
+      "next_actions": "Wait for response",
+      "tags": [],
+      "created_at": "2025-09-01T17:40:23.143939",
+      "updated_at": "2025-09-01T17:40:23.143943"
+    },
+    {
+      "id": "3007de35",
+      "company": "Optiver",
+      "position": "Quantitative Trader",
+      "application_date": "2025-09-01",
+      "status": "submitted",
+      "priority": "high",
+      "source": "company_website",
+      "resume_version": "",
+      "cover_letter": "",
+      "job_description": "",
+      "salary_range": "€90,000 - €130,000",
+      "timeline": {
+        "application_deadline": "",
+        "expected_response": "2025-09-15",
+        "interview_dates": []
+      },
+      "contacts": [],
+      "notes": "",
+      "feedback": "",
+      "next_actions": "Wait for response",
+      "tags": [],
+      "created_at": "2025-09-01T17:42:38.630681",
+      "updated_at": "2025-09-01T17:42:38.630686"
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-01-06",
+    "last_updated": "2025-09-01T17:42:38.630690",
+    "total_applications": 2,
+    "active_applications": 2
+  },
+  "status_definitions": {
+    "draft": "Application being prepared",
+    "submitted": "Application submitted, awaiting response",
+    "screening": "Under initial review/screening",
+    "interview_scheduled": "Interview scheduled",
+    "interview_completed": "Interview completed, awaiting feedback",
+    "offer_received": "Job offer received",
+    "rejected": "Application rejected",
+    "withdrawn": "Application withdrawn by candidate",
+    "accepted": "Offer accepted"
+  },
+  "templates": {
+    "application_entry": {
+      "id": "unique_id",
+      "company": "Company Name",
+      "position": "Position Title",
+      "application_date": "YYYY-MM-DD",
+      "status": "submitted",
+      "priority": "high|medium|low",
+      "source": "company_website|linkedin|recruiter|referral",
+      "resume_version": "path_to_resume_file",
+      "cover_letter": "path_to_cover_letter",
+      "job_description": "JD text or link",
+      "salary_range": "€X,000 - €Y,000",
+      "timeline": {
+        "application_deadline": "YYYY-MM-DD",
+        "expected_response": "YYYY-MM-DD",
+        "interview_dates": []
+      },
+      "contacts": [
+        {
+          "name": "Contact Name",
+          "role": "HR Manager",
+          "email": "contact@company.com",
+          "linkedin": "linkedin_profile"
+        }
+      ],
+      "notes": "Additional notes and observations",
+      "feedback": "Interview feedback and lessons learned",
+      "next_actions": "What to do next",
+      "tags": [
+        "quantitative",
+        "trading",
+        "amsterdam"
+      ],
+      "created_at": "timestamp",
+      "updated_at": "timestamp"
+    }
+  }
+}
