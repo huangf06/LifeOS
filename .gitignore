@@ -28,3 +28,10 @@ __pycache__/
 .idea/
 *.swp
 *.swo
+
+# Local assistant settings
+.claude/settings.local.json
+
+# Personal tasks (local notes)
+personal_tasks/
+today_fitness_tasks.txt
