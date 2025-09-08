@@ -1,116 +1,112 @@
-# LifeOS - AI Personal Assistant
+# LifeOS - 个人生活操作系统
 
-> 通过自然语言对话生成任务，自动发送到OmniFocus的个人助理系统
+费煌的个人数字化生活管理平台
 
-## 🤖 Claude Code Assistant 身份定义
-> **重要**：作为此项目的智能助理，我的核心职责是：
-> - 🎯 **主动GTD任务管理** - 用户提到任何任务时立即使用TodoWrite跟踪并发送到OmniFocus
-> - 📧 **无缝工具整合** - 优先使用项目内的email_sender.py等工具，而不是询问用户
-> - 🚀 **先行动后解释** - 直接执行用户需求，减少确认步骤
-> - 📋 **个人生活助理** - 专注于提升用户的个人效率和生活质量
-> 
-> 配置文件：`config/assistant_profile.json`
+## 🎯 当前重点：量化金融求职
 
-## 🎯 核心功能
+### 求职管理系统
+位置：`./job_search/`
 
-- 🤖 **自然语言任务规划** - 描述你的想法，AI理解并生成结构化任务
-- 📧 **自动发送到OmniFocus** - 一键发送任务到你的GTD系统  
-- 🏋️ **专业健身计划** - 内置完整的健身训练流程
-- 📊 **任务历史追踪** - 记录所有规划历史和使用统计
+**核心功能：**
+- 🎯 智能简历生成和版本管理
+- 📋 申请状态全程追踪  
+- 💼 职位信息收集和分析
+- 📊 数据可视化仪表盘
 
-## 🚀 快速开始
-
-### 1. 设置邮件账户
+**快速开始：**
 ```bash
-./lifeos setup
+cd job_search
+python job_manager.py help
 ```
-配置Gmail等邮箱，用于发送任务到OmniFocus
 
-### 2. 发送健身计划
+详细文档：[job_search/README.md](./job_search/README.md)
+
+---
+
+## 📁 系统架构
+
+```
+lifeos/
+├── job_search/           # 🎯 求职管理系统 (当前重点)
+│   ├── job_manager.py    # 统一管理入口
+│   ├── resumes/          # 简历版本管理
+│   ├── applications/     # 申请追踪
+│   ├── job_data/        # 职位信息
+│   └── dashboard/       # 数据仪表盘
+├── config/              # 系统配置
+├── scripts/             # 自动化脚本
+├── projects/            # 项目管理
+├── data/               # 数据存储
+└── logs/               # 系统日志
+```
+
+## 🚀 核心命令
+
+### 求职管理
 ```bash
-./lifeos fitness  
-```
-自动发送8步完整健身流程到OmniFocus
+# 生成简历
+python job_search/job_manager.py resume --company "IMC Trading" --position "Quantitative Researcher" --pdf
 
-### 3. 智能任务规划
+# 追踪申请
+python job_search/job_manager.py apply add --company "IMC Trading" --position "Quant Researcher"
+
+# 查看进展
+python job_search/job_manager.py apply summary
+python job_search/job_manager.py dashboard
+```
+
+### 系统管理  
 ```bash
-./lifeos "明天要开会，需要准备PPT和相关资料"
-```
-AI理解后生成有序任务列表
+# 个人助手
+python scripts/personal_assistant.py
 
-## 💡 使用示例
-
-**健身规划：**
-```bash
-./lifeos fitness
-# → 创建"健身计划第一天"任务，包含8个有序步骤
+# 日程管理
+python scripts/logseq_tracker.py
 ```
 
-**工作规划：**
-```bash
-./lifeos "下周出差北京，要预订机票酒店，准备工作文件"
-# → 创建"LifeOS任务计划"，包含多个优先级排序的子任务
-```
+## 📈 当前状态
 
-**学习规划：**
-```bash  
-./lifeos "这个月要完成Python课程，每天学习2小时，做项目练习"
-# → 自动拆分学习计划和时间安排
-```
+**求职进展：**
+- ✅ 求职管理系统已搭建完成
+- ✅ 简历模板和版本管理系统就绪
+- 🔄 正在准备IMC Trading量化研究员申请
+- 📋 目标：2025年8月开始全职工作
 
-## 🏗️ 任务结构设计
+**技能栈：**
+- 🎓 VU Amsterdam AI硕士 (GPA: 8.2/10)
+- 🏛️ 清华大学工业工程学士 (0.01%录取率)
+- 💹 中国A股交易经验 + 金融从业资格  
+- 🤖 Python, ML/DL, 统计分析, 时间序列分析
 
-**主任务 + 有序子任务模式**：
-- 一个邮件 = 一个完整工作流
-- 子任务按1、2、3...编号排序  
-- 每步有详细说明和时间估算
-- 优先级分组和总时间统计
+## 🎯 目标与愿景
 
-示例输出：
-```
-健身计划第一天
+**短期目标 (2025 Q1-Q2):**
+- 成功申请量化金融相关职位
+- 完成VU Amsterdam AI硕士学位
+- 建立欧洲职业网络
 
-1. 动态热身：关节活动
-   说明：手腕、肩膀、腰部、膝盖各方向转动热身...
+**长期愿景:**
+- 成为顶级量化研究专家
+- 在AI+金融交叉领域建立影响力
+- 实现财务自由和个人成长
 
-2. 轻松跑步热身 7分钟  
-   说明：心率控制在120-130bpm，为力量训练做准备...
+---
 
-...
-总训练时间：约60分钟
-```
+## 🔧 系统维护
 
-## 📋 完整命令列表
+### 备份策略
+- 自动git版本控制
+- 重要数据云端同步
+- 定期系统状态检查
 
-```bash
-./lifeos "task description"  # 智能任务规划
-./lifeos setup              # 设置邮件账户  
-./lifeos test-email         # 测试邮件发送
-./lifeos fitness            # 发送健身计划
-./lifeos stats              # 查看使用统计
-./lifeos help               # 显示帮助信息
-```
+### 持续改进
+- 基于使用反馈优化工具
+- 集成新的自动化功能
+- 扩展数据分析能力
 
-## ⚙️ 系统要求
+---
 
-- **Python 3.7+** - 运行核心逻辑
-- **邮箱账户** - Gmail/163/QQ等，需要应用专用密码  
-- **OmniFocus 3** - 任务管理目标系统
-- **macOS/Linux** - 命令行环境
+*"The best time to plant a tree was 20 years ago. The second best time is now."* - 37岁，正是厚积薄发的时候。
 
-## 🔧 核心文件
-
-- `lifeos` - 主命令入口脚本
-- `personal_assistant.py` - AI任务规划引擎
-- `email_sender.py` - 邮件发送核心模块
-- `config/email_config.json` - 邮件账户配置（自动生成）
-- `data/task_history.jsonl` - 任务历史记录（自动生成）
-
-## 🎉 开始使用
-
-1. **克隆项目**：`git clone <repo-url>`
-2. **进入目录**：`cd LifeOS`  
-3. **设置邮箱**：`./lifeos setup`
-4. **开始规划**：`./lifeos "你的任务描述"`
-
-让AI成为你的个人生产力助理！💪
+**最后更新：** 2025年1月6日  
+**当前版本：** v2.0 - 求职管理系统完整版

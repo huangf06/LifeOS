@@ -25,7 +25,8 @@
       "Bash(git commit:*)",
       "WebFetch(domain:www.imc.com)",
       "Bash(brew install:*)",
-      "Bash(pandoc:*)"
+      "Bash(pandoc:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
