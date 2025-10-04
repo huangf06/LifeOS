@@ -58,6 +58,44 @@ case "$1" in
     "advice")
         python3 "$SCRIPT_DIR/ai_advisor.py" analyze
         ;;
+    # Obama语音训练命令
+    "obama")
+        shift
+        if [ $# -eq 0 ]; then
+            echo "🎙️ Obama语音训练系统"
+            echo ""
+            echo "用法:"
+            echo "  lifeos obama speak '文本' [语气]  # 生成语音"
+            echo "  lifeos obama practice file.txt    # 练习会话"
+            echo "  lifeos obama progress             # 查看进度"
+            echo "  lifeos obama tones                # 查看语气模式"
+            echo "  lifeos obama setup                # 设置声音克隆"
+            echo ""
+            echo "语气模式: inspiring/conversational/serious/storytelling"
+            exit 0
+        fi
+        case "$1" in
+            "speak")
+                python3 "$SCRIPT_DIR/obama_voice_trainer.py" generate --text "$2" --tone "${3:-conversational}"
+                ;;
+            "practice")
+                python3 "$SCRIPT_DIR/obama_voice_trainer.py" practice --file "$2" --tone "${3:-conversational}"
+                ;;
+            "progress")
+                python3 "$SCRIPT_DIR/obama_voice_trainer.py" progress
+                ;;
+            "tones")
+                python3 "$SCRIPT_DIR/obama_voice_trainer.py" list-tones
+                ;;
+            "setup")
+                python3 "$SCRIPT_DIR/voice_api.py" setup
+                ;;
+            *)
+                echo "❌ 未知命令: $1"
+                echo "使用 'lifeos obama' 查看帮助"
+                ;;
+        esac
+        ;;
     "help")
         echo "🤖 LifeOS Personal Assistant 帮助"
         echo ""
@@ -79,6 +117,12 @@ case "$1" in
         echo "  lifeos analyze            # AI分析生活模式和建议"
         echo "  lifeos plan               # 生成明日优化计划"
         echo "  lifeos advice             # 获取AI生活建议"
+        echo ""
+        echo "Obama语音训练命令："
+        echo "  lifeos obama              # 查看语音训练帮助"
+        echo "  lifeos obama speak '文本' # 生成奥巴马风格语音"
+        echo "  lifeos obama practice     # 开始练习会话"
+        echo "  lifeos obama progress     # 查看训练进度"
         echo ""
         echo "这是你的AI个人助理，可以："
         echo "• 理解你的自然语言描述"
