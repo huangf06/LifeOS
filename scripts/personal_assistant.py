@@ -359,7 +359,9 @@ class PersonalAssistant:
         
         # 添加底部信息
         total_time = sum(task['estimated_time'] for task in tasks)
-        suggested_time = datetime.now().replace(hour=datetime.now().hour + total_time//60).strftime('%H:%M')
+        # 计算建议完成时间，确保小时数在0-23范围内
+        suggested_hour = (datetime.now().hour + total_time//60) % 24
+        suggested_time = datetime.now().replace(hour=suggested_hour).strftime('%H:%M')
         
         body += body_template["footer"].format(
             total_hours=total_time//60,
@@ -419,36 +421,50 @@ class PersonalAssistant:
 def main():
     """命令行入口"""
     import sys
-    
+
     assistant = PersonalAssistant()
-    
+
     if len(sys.argv) < 2:
         print("用法: python personal_assistant.py '你的任务描述'")
         print("示例: python personal_assistant.py '明天要开会讨论新项目，需要提前准备资料'")
+        print("选项: --stats 查看统计, --auto-send 自动发送")
         return
-    
-    user_input = ' '.join(sys.argv[1:])
-    
+
+    # 检查特殊命令
+    if '--stats' in sys.argv:
+        print(assistant.get_task_stats())
+        return
+
+    # 检查是否自动发送
+    auto_send = '--auto-send' in sys.argv
+
+    # 移除选项参数
+    args = [arg for arg in sys.argv[1:] if not arg.startswith('--')]
+    user_input = ' '.join(args)
+
     print(f"🤖 正在分析: {user_input}")
-    
+
     # 解析任务
     tasks = assistant.parse_user_input(user_input)
-    
+
     if not tasks:
         print("❌ 没有识别到具体任务，请描述得更清楚一些")
         return
-    
+
     # 生成计划
     plan, tasks = assistant.generate_task_plan(tasks)
     print(plan)
-    
-    # 用户确认
-    confirm = input("要发送到OmniFocus吗？(y/n): ").strip().lower()
-    
+
+    # 用户确认或自动发送
+    if auto_send:
+        confirm = 'y'
+    else:
+        confirm = input("要发送到OmniFocus吗？(y/n): ").strip().lower()
+
     if confirm in ['y', 'yes', '是', '好']:
         result = assistant.send_to_omnifocus(tasks)
         print(result)
-        
+
         # 保存历史
         assistant.save_task_history(tasks, user_input)
         print("📝 已保存到任务历史")

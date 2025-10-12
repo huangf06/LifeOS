@@ -2,7 +2,7 @@
 # LifeOS Personal Assistant 快速启动脚本
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PYTHON_SCRIPT="$SCRIPT_DIR/personal_assistant.py"
+PYTHON_SCRIPT="$SCRIPT_DIR/scripts/personal_assistant.py"
 
 # 检查参数
 if [ $# -eq 0 ]; then
@@ -21,42 +21,42 @@ fi
 # 特殊命令
 case "$1" in
     "setup")
-        python3 "$SCRIPT_DIR/email_sender.py" setup
+        python3 "$SCRIPT_DIR/scripts/email_sender.py" setup
         ;;
     "test-email")
-        python3 "$SCRIPT_DIR/email_sender.py" test
+        python3 "$SCRIPT_DIR/scripts/email_sender.py" test
         ;;
     "fitness")
-        python3 "$SCRIPT_DIR/email_sender.py" fitness
+        python3 "$SCRIPT_DIR/scripts/email_sender.py" fitness
         ;;
     "stats")
         python3 "$PYTHON_SCRIPT" --stats
         ;;
     # 生活追踪命令
     "log")
-        python3 "$SCRIPT_DIR/logseq_tracker.py" log --category "$2" --content "$3" --rating "$4" --duration "$5"
+        python3 "$SCRIPT_DIR/scripts/logseq_tracker.py" log --category "$2" --content "$3" --rating "$4" --duration "$5"
         ;;
     "data")
-        python3 "$SCRIPT_DIR/logseq_tracker.py" data --type "$2" --value "$3"
+        python3 "$SCRIPT_DIR/scripts/logseq_tracker.py" data --type "$2" --value "$3"
         ;;
     "today")
-        python3 "$SCRIPT_DIR/logseq_tracker.py" init
+        python3 "$SCRIPT_DIR/scripts/logseq_tracker.py" init
         ;;
     "report")
-        python3 "$SCRIPT_DIR/logseq_tracker.py" report
+        python3 "$SCRIPT_DIR/scripts/logseq_tracker.py" report
         ;;
     "sync")
-        python3 "$SCRIPT_DIR/logseq_tracker.py" sync
+        python3 "$SCRIPT_DIR/scripts/logseq_tracker.py" sync
         ;;
     # AI顾问命令
     "analyze")
-        python3 "$SCRIPT_DIR/ai_advisor.py" analyze
+        python3 "$SCRIPT_DIR/scripts/ai_advisor.py" analyze
         ;;
     "plan")
-        python3 "$SCRIPT_DIR/ai_advisor.py" plan
+        python3 "$SCRIPT_DIR/scripts/ai_advisor.py" plan
         ;;
     "advice")
-        python3 "$SCRIPT_DIR/ai_advisor.py" analyze
+        python3 "$SCRIPT_DIR/scripts/ai_advisor.py" analyze
         ;;
     # Obama语音训练命令
     "obama")
@@ -76,19 +76,19 @@ case "$1" in
         fi
         case "$1" in
             "speak")
-                python3 "$SCRIPT_DIR/obama_voice_trainer.py" generate --text "$2" --tone "${3:-conversational}"
+                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" generate --text "$2" --tone "${3:-conversational}"
                 ;;
             "practice")
-                python3 "$SCRIPT_DIR/obama_voice_trainer.py" practice --file "$2" --tone "${3:-conversational}"
+                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" practice --file "$2" --tone "${3:-conversational}"
                 ;;
             "progress")
-                python3 "$SCRIPT_DIR/obama_voice_trainer.py" progress
+                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" progress
                 ;;
             "tones")
-                python3 "$SCRIPT_DIR/obama_voice_trainer.py" list-tones
+                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" list-tones
                 ;;
             "setup")
-                python3 "$SCRIPT_DIR/voice_api.py" setup
+                python3 "$SCRIPT_DIR/scripts/voice_api.py" setup
                 ;;
             *)
                 echo "❌ 未知命令: $1"
