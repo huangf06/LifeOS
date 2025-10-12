@@ -8,6 +8,8 @@ data/
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
 
 # 临时文件
 *.tmp
