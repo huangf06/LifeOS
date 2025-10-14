@@ -21,13 +21,28 @@ fi
 # 特殊命令
 case "$1" in
     "setup")
-        python3 "$SCRIPT_DIR/scripts/email_sender.py" setup
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" setup
         ;;
-    "test-email")
-        python3 "$SCRIPT_DIR/scripts/email_sender.py" test
+    "test")
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" test
         ;;
     "fitness")
-        python3 "$SCRIPT_DIR/scripts/email_sender.py" fitness
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" fitness
+        ;;
+    "init-todoist")
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" init-projects
+        ;;
+    "setup-goals")
+        python3 "$SCRIPT_DIR/scripts/setup_goals.py" --all
+        ;;
+    "setup-goal")
+        python3 "$SCRIPT_DIR/scripts/setup_goals.py" --goal "$2"
+        ;;
+    "export-tasks")
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" export
+        ;;
+    "list-tasks")
+        python3 "$SCRIPT_DIR/scripts/todoist_manager.py" list "$2" "$3"
         ;;
     "stats")
         python3 "$PYTHON_SCRIPT" --stats
@@ -58,52 +73,19 @@ case "$1" in
     "advice")
         python3 "$SCRIPT_DIR/scripts/ai_advisor.py" analyze
         ;;
-    # Obama语音训练命令
-    "obama")
-        shift
-        if [ $# -eq 0 ]; then
-            echo "🎙️ Obama语音训练系统"
-            echo ""
-            echo "用法:"
-            echo "  lifeos obama speak '文本' [语气]  # 生成语音"
-            echo "  lifeos obama practice file.txt    # 练习会话"
-            echo "  lifeos obama progress             # 查看进度"
-            echo "  lifeos obama tones                # 查看语气模式"
-            echo "  lifeos obama setup                # 设置声音克隆"
-            echo ""
-            echo "语气模式: inspiring/conversational/serious/storytelling"
-            exit 0
-        fi
-        case "$1" in
-            "speak")
-                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" generate --text "$2" --tone "${3:-conversational}"
-                ;;
-            "practice")
-                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" practice --file "$2" --tone "${3:-conversational}"
-                ;;
-            "progress")
-                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" progress
-                ;;
-            "tones")
-                python3 "$SCRIPT_DIR/scripts/obama_voice_trainer.py" list-tones
-                ;;
-            "setup")
-                python3 "$SCRIPT_DIR/scripts/voice_api.py" setup
-                ;;
-            *)
-                echo "❌ 未知命令: $1"
-                echo "使用 'lifeos obama' 查看帮助"
-                ;;
-        esac
-        ;;
     "help")
         echo "🤖 LifeOS Personal Assistant 帮助"
         echo ""
         echo "基础命令："
         echo "  lifeos 'task description'  # 智能任务规划"
-        echo "  lifeos setup              # 设置邮件账户"
-        echo "  lifeos test-email         # 测试邮件发送"
+        echo "  lifeos setup              # 设置Todoist API Token"
+        echo "  lifeos test               # 测试Todoist连接"
+        echo "  lifeos init-todoist       # 初始化Todoist项目和标签"
+        echo "  lifeos setup-goals        # 快速设置三大目标（健身/求职/英语）"
+        echo "  lifeos setup-goal fitness # 设置单个目标"
         echo "  lifeos fitness            # 发送健身计划"
+        echo "  lifeos export-tasks       # 导出所有任务数据"
+        echo "  lifeos list-tasks         # 列出所有任务"
         echo "  lifeos stats              # 查看使用统计"
         echo ""
         echo "生活追踪命令："
@@ -118,17 +100,12 @@ case "$1" in
         echo "  lifeos plan               # 生成明日优化计划"
         echo "  lifeos advice             # 获取AI生活建议"
         echo ""
-        echo "Obama语音训练命令："
-        echo "  lifeos obama              # 查看语音训练帮助"
-        echo "  lifeos obama speak '文本' # 生成奥巴马风格语音"
-        echo "  lifeos obama practice     # 开始练习会话"
-        echo "  lifeos obama progress     # 查看训练进度"
-        echo ""
         echo "这是你的AI个人助理，可以："
         echo "• 理解你的自然语言描述"
-        echo "• 生成结构化的任务计划" 
-        echo "• 自动发送任务到OmniFocus"
+        echo "• 生成结构化的任务计划"
+        echo "• 自动发送任务到Todoist"
         echo "• 跟踪任务历史和统计"
+        echo "• 导出和分析任务数据"
         echo ""
         echo "示例："
         echo "  lifeos '明天要开会，需要准备PPT和资料'"

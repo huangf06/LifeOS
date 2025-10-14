@@ -1,8 +1,11 @@
 # 邮件配置（包含敏感信息）
 config/email_config.json
 
-# 任务历史数据  
+# 任务历史数据
 data/
+
+# 历史存档（已废弃的功能和文件，仅作历史参考）
+archive/
 
 # Python缓存
 __pycache__/
@@ -33,7 +36,3 @@ __pycache__/
 
 # Local assistant settings
 .claude/settings.local.json
-
-# Personal tasks (local notes)
-personal_tasks/
-today_fitness_tasks.txt

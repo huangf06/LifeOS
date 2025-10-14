@@ -1,0 +1,92 @@
+{
+  "api_token": "83b47af04f17b264f501eaf84385a117edbd1b6d",
+  "api_version": "v2",
+  "api_base_url": "https://api.todoist.com/rest/v2",
+  "setup_date": "2025-01-14T00:00:00",
+  "default_settings": {
+    "priority_mapping": {
+      "high": 4,
+      "medium": 2,
+      "low": 1
+    },
+    "auto_create_projects": true,
+    "sync_enabled": true
+  },
+  "projects": {
+    "fitness": {
+      "name": "work-out",
+      "color": "red",
+      "is_favorite": true,
+      "project_id": "6f5g9rRr65hhMxcC"
+    },
+    "career": {
+      "name": "job-hunt",
+      "color": "blue",
+      "is_favorite": true,
+      "project_id": "6f5g9cxJGpFRMjVm"
+    },
+    "english": {
+      "name": "speak-up",
+      "color": "green",
+      "is_favorite": true,
+      "project_id": "6f5gC3V89RjHgmXV"
+    },
+    "work": {
+      "name": "work",
+      "color": "orange",
+      "is_favorite": false,
+      "project_id": null
+    },
+    "study": {
+      "name": "study",
+      "color": "violet",
+      "is_favorite": false,
+      "project_id": null
+    },
+    "life": {
+      "name": "life",
+      "color": "charcoal",
+      "is_favorite": false,
+      "project_id": null
+    },
+    "communication": {
+      "name": "communication",
+      "color": "cyan",
+      "is_favorite": false,
+      "project_id": null
+    },
+    "other": {
+      "name": "other",
+      "color": "grey",
+      "is_favorite": false,
+      "project_id": null
+    }
+  },
+  "labels": {
+    "urgent": {
+      "name": "urgent",
+      "color": "red",
+      "label_id": "2182045193"
+    },
+    "important": {
+      "name": "important",
+      "color": "orange",
+      "label_id": "2182045194"
+    },
+    "routine": {
+      "name": "routine",
+      "color": "grey",
+      "label_id": "2182045195"
+    },
+    "habit": {
+      "name": "habit",
+      "color": "green",
+      "label_id": "2182045196"
+    }
+  },
+  "notes": [
+    "API Token from Todoist Settings > Integrations > Developer",
+    "Priority mapping: high=4(urgent), medium=2(normal), low=1(low)",
+    "Project colors: berry_red, red, orange, yellow, olive_green, lime_green, green, mint_green, teal, sky_blue, light_blue, blue, grape, violet, lavender, magenta, salmon, charcoal, grey, taupe"
+  ]
+}
