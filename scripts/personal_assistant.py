@@ -14,8 +14,13 @@ import re
 import sys
 
 class PersonalAssistant:
-    def __init__(self, lifeos_path="~/LifeOS"):
-        self.lifeos_path = Path(lifeos_path).expanduser()
+    def __init__(self, lifeos_path=None):
+        # 自动获取项目根目录（相对于此脚本文件）
+        if lifeos_path is None:
+            script_dir = Path(__file__).parent
+            self.lifeos_path = script_dir.parent
+        else:
+            self.lifeos_path = Path(lifeos_path).expanduser()
         self.data_path = self.lifeos_path / "data"
         self.config_path = self.lifeos_path / "config"
 
@@ -41,17 +46,29 @@ class PersonalAssistant:
         
         # 简单的关键词识别（实际使用中Claude会更智能地理解）
         task_indicators = [
-            "要做", "需要", "完成", "准备", "处理", "写", "开会", "联系", 
-            "买", "约", "学习", "复习", "整理", "安排"
+            "要做", "需要", "完成", "准备", "处理", "写", "开会", "联系",
+            "买", "约", "学习", "复习", "整理", "安排",
+            # 新增动词
+            "去", "取", "拿", "送", "接", "订", "预约", "报名",
+            "提交", "发送", "回复", "打电话", "查看", "检查",
+            "修改", "更新", "删除", "测试", "上传", "下载",
+            "阅读", "研究", "分析", "总结", "汇报", "沟通"
         ]
-        
-        # 时间关键词
+
+        # 时间关键词 - 扩展支持具体时间
         time_patterns = {
             "今天": 0,
             "明天": 1,
             "后天": 2,
             "这周": 7,
             "下周": 14
+        }
+
+        # 具体时间段
+        time_periods = {
+            "早上": "morning", "上午": "morning",
+            "中午": "noon", "下午": "afternoon",
+            "晚上": "evening", "夜里": "night"
         }
         
         # 分句处理
@@ -88,17 +105,19 @@ class PersonalAssistant:
     def _extract_project(self, text):
         """提取项目分类"""
         project_keywords = {
-            "工作": ["项目", "会议", "报告", "代码", "开发", "测试"],
-            "学习": ["学习", "复习", "阅读", "研究", "课程"],
-            "生活": ["买", "购", "医院", "体检", "健身", "运动"],
-            "沟通": ["联系", "电话", "邮件", "微信", "约"]
+            "fitness": ["健身", "运动", "锻炼", "跑步", "力量", "瑜伽", "游泳", "训练"],
+            "career": ["面试", "简历", "求职", "招聘", "投递", "笔试", "作品集"],
+            "english": ["英语", "学习", "口语", "听力", "阅读", "写作", "单词", "语法"],
+            "work": ["项目", "会议", "报告", "代码", "开发", "测试", "上线", "文档", "汇报"],
+            "study": ["复习", "研究", "课程", "论文", "资料", "笔记"],
+            "life": ["买", "购", "取", "送", "医院", "体检", "快递", "缴费", "预约"]
         }
-        
+
         for project, keywords in project_keywords.items():
             if any(keyword in text for keyword in keywords):
                 return project
-        
-        return "其他"
+
+        return "other"
     
     def _extract_duration(self, text):
         """提取预估时间"""

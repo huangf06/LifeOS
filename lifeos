@@ -44,6 +44,9 @@ case "$1" in
     "list-tasks")
         python3 "$SCRIPT_DIR/scripts/todoist_manager.py" list "$2" "$3"
         ;;
+    "quick")
+        python3 "$SCRIPT_DIR/scripts/quick_task.py" "$2" "$3" "$4" "$5" "$6"
+        ;;
     "stats")
         python3 "$PYTHON_SCRIPT" --stats
         ;;
@@ -86,6 +89,7 @@ case "$1" in
         echo "  lifeos fitness            # 发送健身计划"
         echo "  lifeos export-tasks       # 导出所有任务数据"
         echo "  lifeos list-tasks         # 列出所有任务"
+        echo "  lifeos quick '任务' '时间' [项目] [优先级] [描述]  # 快速创建任务"
         echo "  lifeos stats              # 查看使用统计"
         echo ""
         echo "生活追踪命令："
@@ -110,6 +114,8 @@ case "$1" in
         echo "示例："
         echo "  lifeos '明天要开会，需要准备PPT和资料'"
         echo "  lifeos '这周完成项目报告，安排学习时间'"
+        echo "  lifeos quick '取快递' 'today 21:00'"
+        echo "  lifeos quick '健身' 'every day at 18:00' fitness high"
         ;;
     *)
         python3 "$PYTHON_SCRIPT" "$@"

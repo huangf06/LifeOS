@@ -13,8 +13,14 @@ from collections import defaultdict, Counter
 import re
 
 class AIAdvisor:
-    def __init__(self, lifeos_path="~/LifeOS"):
-        self.lifeos_path = Path(lifeos_path).expanduser()
+    def __init__(self, lifeos_path=None):
+        # 自动获取项目根目录（相对于此脚本文件）
+        if lifeos_path is None:
+            script_dir = Path(__file__).parent
+            self.lifeos_path = script_dir.parent
+        else:
+            self.lifeos_path = Path(lifeos_path).expanduser()
+
         self.data_path = self.lifeos_path / "data"
         self.insights_path = self.data_path / "ai_insights.json"
         

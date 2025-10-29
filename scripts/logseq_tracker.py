@@ -14,9 +14,16 @@ import statistics
 from collections import defaultdict
 
 class LogseqTracker:
-    def __init__(self, logseq_path="~/Documents/logseq", lifeos_path="~/LifeOS"):
+    def __init__(self, logseq_path="~/Documents/logseq", lifeos_path=None):
         self.logseq_path = Path(logseq_path).expanduser()
-        self.lifeos_path = Path(lifeos_path).expanduser()
+
+        # 自动获取项目根目录（相对于此脚本文件）
+        if lifeos_path is None:
+            script_dir = Path(__file__).parent
+            self.lifeos_path = script_dir.parent
+        else:
+            self.lifeos_path = Path(lifeos_path).expanduser()
+
         self.pages_path = self.logseq_path / "pages"
         self.journals_path = self.logseq_path / "journals"
         

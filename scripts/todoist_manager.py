@@ -21,8 +21,14 @@ except ImportError:
 
 
 class TodoistManager:
-    def __init__(self, config_path="~/LifeOS/config/todoist_config.json"):
-        self.config_path = Path(config_path).expanduser()
+    def __init__(self, config_path=None):
+        # 自动获取项目根目录（相对于此脚本文件）
+        if config_path is None:
+            script_dir = Path(__file__).parent
+            project_root = script_dir.parent
+            self.config_path = project_root / "config" / "todoist_config.json"
+        else:
+            self.config_path = Path(config_path).expanduser()
         self.config_path.parent.mkdir(parents=True, exist_ok=True)
         self.config = self.load_config()
 
@@ -382,7 +388,14 @@ class TodoistManager:
     def export_tasks_to_json(self, output_file: str = None):
         """导出所有任务为JSON（用于数据分析）"""
         if not output_file:
-            output_file = f"~/LifeOS/data/todoist_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            # 使用相对路径
+            script_dir = Path(__file__).parent
+            project_root = script_dir.parent
+            data_dir = project_root / "data"
+            data_dir.mkdir(parents=True, exist_ok=True)
+            output_file = data_dir / f"todoist_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        else:
+            output_file = Path(output_file)
 
         output_path = Path(output_file).expanduser()
         output_path.parent.mkdir(parents=True, exist_ok=True)
