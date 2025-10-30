@@ -1,0 +1,3 @@
+{"timestamp": "2025-10-30T07:06:39.434016", "user_input": "今天研究比特币和黄金的市场行情和投资分析", "generated_tasks": [{"name": "今天研究比特币和黄金的市场行情和投资分析", "priority": "medium", "due_days": 0, "project": "study", "estimated_time": 30}], "total_tasks": 1}
+{"timestamp": "2025-10-30T07:10:03.052446", "user_input": "测试修复：准备周末的健身计划", "generated_tasks": [{"name": "测试修复：准备周末的健身计划", "priority": "medium", "due_days": 1, "project": "fitness", "estimated_time": 60}], "total_tasks": 1}
+{"timestamp": "2025-10-30T07:20:48.561925", "user_input": "今天还要剪头发，洗衣服刷鞋，收拾行李，研究Seville旅游攻略", "generated_tasks": [{"name": "研究Seville旅游攻略", "priority": "medium", "due_days": 1, "project": "study", "estimated_time": 30}], "total_tasks": 1}

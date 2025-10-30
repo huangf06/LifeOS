@@ -237,6 +237,13 @@ class PersonalAssistant:
         return f"📊 已处理 {total_sessions} 次对话，生成 {total_tasks} 个任务"
 
 
+def is_interactive():
+    """检测是否在交互式环境中运行"""
+    import sys
+    # 检查stdin是否是TTY（终端）
+    return sys.stdin.isatty()
+
+
 def main():
     """命令行入口"""
     import sys
@@ -256,6 +263,10 @@ def main():
 
     # 检查是否自动发送
     auto_send = '--auto-send' in sys.argv
+
+    # 如果不是交互式环境且没有指定 --auto-send，自动启用自动发送
+    if not is_interactive() and not auto_send:
+        auto_send = True
 
     # 移除选项参数
     args = [arg for arg in sys.argv[1:] if not arg.startswith('--')]
@@ -278,7 +289,12 @@ def main():
     if auto_send:
         confirm = 'y'
     else:
-        confirm = input("要发送到Todoist吗？(y/n): ").strip().lower()
+        try:
+            confirm = input("要发送到Todoist吗？(y/n): ").strip().lower()
+        except EOFError:
+            # 如果无法读取输入，默认自动发送
+            confirm = 'y'
+            print("(自动发送)")
 
     if confirm in ['y', 'yes', '是', '好']:
         result = assistant.send_to_todoist(tasks)

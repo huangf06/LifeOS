@@ -2,7 +2,7 @@
 config/email_config.json
 
 # 任务历史数据
-data/
+# data/
 
 # 历史存档（已废弃的功能和文件，仅作历史参考）
 archive/
