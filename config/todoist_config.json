@@ -60,6 +60,12 @@
       "color": "grey",
       "is_favorite": false,
       "project_id": null
+    },
+    "errands": {
+      "name": "Errands",
+      "color": "mint_green",
+      "is_favorite": false,
+      "project_id": "6fCfRRMCvQJwfQxp"
     }
   },
   "labels": {
