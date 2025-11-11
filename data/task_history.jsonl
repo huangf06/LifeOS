@@ -8,3 +8,4 @@
 {"timestamp": "2025-11-08T15:27:25.966775", "user_input": "今天要买香蕉，买亚麻籽，7号电池", "generated_tasks": [{"name": "今天要买香蕉", "priority": "medium", "due_days": 0, "project": "life", "estimated_time": 20}, {"name": "买亚麻籽", "priority": "medium", "due_days": 1, "project": "life", "estimated_time": 20}], "total_tasks": 2}
 {"timestamp": "2025-11-08T15:27:51.735689", "user_input": "买7号电池", "generated_tasks": [{"name": "买7号电池", "priority": "medium", "due_days": 1, "project": "life", "estimated_time": 20}], "total_tasks": 1}
 {"timestamp": "2025-11-08T15:29:01.743648", "user_input": "买牛奶", "generated_tasks": [{"name": "买牛奶", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 20}], "total_tasks": 1}
+{"timestamp": "2025-11-11T13:24:56.572788", "user_input": "购买一套床品：床单、被套、枕套", "generated_tasks": [{"name": "购买一套床品：床单、被套、枕套", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 20}], "total_tasks": 1}

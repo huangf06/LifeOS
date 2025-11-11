@@ -7,6 +7,8 @@ config/email_config.json
 # 历史存档（已废弃的功能和文件，仅作历史参考）
 archive/
 
+shopping/
+
 # Python缓存
 __pycache__/
 *.pyc
