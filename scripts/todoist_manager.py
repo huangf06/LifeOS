@@ -8,7 +8,7 @@ import json
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, TypedDict
 import getpass
 
 try:
@@ -18,6 +18,13 @@ except ImportError:
     print("❌ Todoist API Python库未安装")
     print("请运行: pip3 install todoist-api-python")
     sys.exit(1)
+
+
+class BatchResult(TypedDict):
+    """批量任务创建结果"""
+    success: int  # 成功创建的任务数
+    failed: int   # 创建失败的任务数
+    tasks: List[Task]  # 成功创建的任务对象列表
 
 
 class TodoistManager:
@@ -245,8 +252,18 @@ class TodoistManager:
             print(f"❌ 创建任务失败: {e}")
             return None
 
-    def create_tasks_batch(self, tasks: List[Dict]) -> Dict:
-        """批量创建任务"""
+    def create_tasks_batch(self, tasks: List[Dict]) -> BatchResult:
+        """批量创建任务
+
+        Args:
+            tasks: 任务列表，每个任务是一个字典，包含 name/content, project, priority 等字段
+
+        Returns:
+            BatchResult: 包含成功数、失败数和任务列表的字典
+                - success: 成功创建的任务数
+                - failed: 创建失败的任务数
+                - tasks: 成功创建的 Task 对象列表
+        """
         if not self.api:
             print("❌ Todoist API未初始化")
             return {"success": 0, "failed": 0, "tasks": []}
