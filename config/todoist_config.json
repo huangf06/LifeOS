@@ -31,41 +31,17 @@
       "is_favorite": true,
       "project_id": "6f5gC3V89RjHgmXV"
     },
-    "work": {
-      "name": "work",
-      "color": "orange",
-      "is_favorite": false,
-      "project_id": null
-    },
-    "study": {
-      "name": "study",
-      "color": "violet",
-      "is_favorite": false,
-      "project_id": null
-    },
-    "life": {
-      "name": "life",
-      "color": "charcoal",
-      "is_favorite": false,
-      "project_id": null
-    },
-    "communication": {
-      "name": "communication",
-      "color": "cyan",
-      "is_favorite": false,
-      "project_id": null
-    },
-    "other": {
-      "name": "other",
-      "color": "grey",
-      "is_favorite": false,
-      "project_id": null
-    },
     "errands": {
       "name": "Errands",
       "color": "mint_green",
       "is_favorite": false,
       "project_id": "6fCfRRMCvQJwfQxp"
+    },
+    "inbox": {
+      "name": "Inbox",
+      "color": "grey",
+      "is_favorite": false,
+      "project_id": "6f5g2vMvRpQX7m77"
     }
   },
   "labels": {

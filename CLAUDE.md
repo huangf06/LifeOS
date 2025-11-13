@@ -89,10 +89,8 @@ Pattern analysis and recommendations:
   "fitness": "work-out",    // Workout and fitness
   "career": "job-hunt",     // Job searching
   "english": "speak-up",    // English learning
-  "work": "work",           // General work
-  "study": "study",         // Study tasks
-  "life": "life",           // Life tasks
-  "other": "other"          // Miscellaneous
+  "errands": "Errands",     // Daily errands and life tasks (shopping, cleaning, etc.)
+  "inbox": "Inbox"          // Default inbox for uncategorized tasks
 }
 ```
 
