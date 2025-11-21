@@ -11,3 +11,4 @@
 {"timestamp": "2025-11-11T13:24:56.572788", "user_input": "购买一套床品：床单、被套、枕套", "generated_tasks": [{"name": "购买一套床品：床单、被套、枕套", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 20}], "total_tasks": 1}
 {"timestamp": "2025-11-13T23:27:23.272225", "user_input": "今天要收拾屋子腾出更多空间，洗新买的床单被罩枕套", "generated_tasks": [{"name": "洗新买的床单被罩枕套", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 20}], "total_tasks": 1}
 {"timestamp": "2025-11-13T23:33:34.176719", "user_input": "收拾屋子腾出更多空间", "generated_tasks": [{"name": "收拾屋子腾出更多空间", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 30}], "total_tasks": 1}
+{"timestamp": "2025-11-15T11:58:13.348098", "user_input": "收拾房间 5 分钟", "generated_tasks": [{"name": "收拾房间 5 分钟", "priority": "medium", "due_days": 1, "project": "errands", "estimated_time": 5}], "total_tasks": 1}
