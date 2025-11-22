@@ -1,0 +1,4 @@
+name,category,store,price,unit,notes,frequency
+牛奶,dairy,Albert Heijn,1.89,L,半脂,weekly
+鸡蛋,dairy,Albert Heijn,2.99,10个,散养,weekly
+香蕉,fruit,Albert Heijn,1.49,kg,,weekly
