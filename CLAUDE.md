@@ -20,6 +20,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./lifeos export-tasks                # Export all tasks to JSON
 ./lifeos list-tasks                  # List all tasks
 
+# Anki Sync (Notion → Anki)
+./lifeos setup-anki [PAGE_ID]        # Create Anki Cards database
+./lifeos sync-anki                   # Sync Notion to Anki (.apkg)
+./lifeos sync-anki --dry-run         # Test sync without changes
+
 # Life Tracking (Logseq Integration)
 ./lifeos today                       # Initialize today's journal
 ./lifeos log work 'content' 8 '2h'  # Log activity
@@ -74,6 +79,21 @@ Pattern analysis and recommendations:
 - Generate optimization suggestions
 - Create personalized plans
 
+### 6. Anki Sync Manager (`scripts/sync_notion_anki.py`)
+Notion to Anki synchronization system:
+- Query unsynced cards from Notion "Anki Cards" database
+- Generate .apkg files using genanki
+- Send to Telegram via Bot API
+- Update Notion sync status automatically
+- Support for multiple decks and tags
+- Prevent duplicate cards with stable GUIDs
+
+**Key Features:**
+- Uses Notion API 2025-09-03 (latest version)
+- GitHub Actions automation (daily at 8am Beijing time)
+- Dry-run mode for testing
+- Cross-platform Anki import (mobile & desktop)
+
 ---
 
 ## Configuration Files
@@ -81,6 +101,8 @@ Pattern analysis and recommendations:
 - `config/todoist_config.json` - Todoist API settings and project mappings
 - `config/assistant_profile.json` - Assistant behavior configuration
 - `config/logseq_templates.json` - Logseq journal templates
+- `config/anki_sync_config.json` - Anki sync behavior and deck settings
+- `notion-kit/.env` - Notion and Telegram credentials
 
 ### Todoist Project Mapping
 
@@ -112,19 +134,33 @@ LifeOS/
 ├── TODOIST_QUICKSTART.md         # User quickstart guide
 ├── README.md                     # Project readme
 │
+├── .github/
+│   └── workflows/
+│       └── sync-anki.yml         # GitHub Actions for daily sync
+│
 ├── scripts/
 │   ├── todoist_manager.py        # Todoist API core
 │   ├── personal_assistant.py     # NLP task parser
 │   ├── setup_goals.py            # Goal templates
 │   ├── logseq_tracker.py         # Life tracking
-│   └── ai_advisor.py             # AI recommendations
+│   ├── ai_advisor.py             # AI recommendations
+│   ├── sync_notion_anki.py       # Anki sync script
+│   └── setup_anki_database.py    # Anki database setup
 │
 ├── config/
 │   ├── todoist_config.json       # Todoist settings
 │   ├── assistant_profile.json    # Assistant config
-│   └── logseq_templates.json     # Journal templates
+│   ├── logseq_templates.json     # Journal templates
+│   └── anki_sync_config.json     # Anki sync settings
+│
+├── notion-kit/
+│   ├── .env                      # Notion & Telegram credentials
+│   └── notion_wrap.py            # Notion API wrapper (2025-09-03)
 │
 ├── data/                         # Local data storage
+│   ├── anki_sync_*.apkg          # Generated Anki packages
+│   └── anki_sync_state.json      # Sync state tracking
+│
 ├── schedule_management/          # Schedule tracking
 └── career/                       # Career documents
 
@@ -136,12 +172,17 @@ LifeOS/
 
 ```bash
 pip install todoist-api-python    # Official Todoist SDK
+pip install genanki               # Anki package generator
+pip install notion-client         # Notion API SDK
+pip install requests              # HTTP requests
+pip install python-dotenv         # Environment variables
 ```
 
 **Standard libraries used:**
 - `json`, `os`, `sys`, `pathlib` - System operations
 - `datetime`, `statistics` - Data processing
 - `subprocess`, `argparse` - CLI operations
+- `hashlib` - GUID generation
 
 ---
 
@@ -152,6 +193,19 @@ pip install todoist-api-python    # Official Todoist SDK
 - **API Version**: REST API v2
 - **Endpoint**: `https://api.todoist.com/rest/v2`
 - **Features**: Projects, labels, priorities, due dates, recurring tasks
+
+### Notion API
+- **Authentication**: Integration token in `notion-kit/.env`
+- **API Version**: 2025-09-03 (latest)
+- **Endpoint**: `https://api.notion.com/v1`
+- **Features**: Database queries, page updates, data_source_id support
+- **Database**: "Anki Cards" with Front, Back, Deck, Tags, Source fields
+
+### Telegram Bot API
+- **Authentication**: Bot token + Chat ID in `notion-kit/.env`
+- **Endpoint**: `https://api.telegram.org/bot{token}`
+- **Features**: Send .apkg files as documents
+- **Setup**: Create bot via @BotFather, get Chat ID via @userinfobot
 
 ### Logseq
 - **Path**: `/root/Documents/logseq/`

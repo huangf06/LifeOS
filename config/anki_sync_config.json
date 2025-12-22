@@ -1,0 +1,25 @@
+{
+  "notion": {
+    "database_id": "YOUR_DATABASE_ID",
+    "filter": {
+      "or": [
+        { "property": "Synced", "checkbox": { "equals": false } },
+        { "property": "Synced", "checkbox": { "is_empty": true } }
+      ]
+    }
+  },
+  "anki": {
+    "deck_prefix": "LifeOS",
+    "model_name": "LifeOS Basic",
+    "model_id": 1607392319,
+    "default_deck": "General"
+  },
+  "telegram": {
+    "enabled": true,
+    "send_empty_report": false
+  },
+  "sync": {
+    "update_notion_status": true,
+    "generate_full_deck": false
+  }
+}

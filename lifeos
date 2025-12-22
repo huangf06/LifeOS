@@ -76,6 +76,14 @@ case "$1" in
     "advice")
         python3 "$SCRIPT_DIR/scripts/ai_advisor.py" analyze
         ;;
+    # Anki 同步命令
+    "sync-anki")
+        shift  # 移除 sync-anki 参数
+        python3 "$SCRIPT_DIR/scripts/sync_notion_anki.py" "$@"
+        ;;
+    "setup-anki")
+        python3 "$SCRIPT_DIR/scripts/setup_anki_database.py" "$2"
+        ;;
     "help")
         echo "🤖 LifeOS Personal Assistant 帮助"
         echo ""
@@ -103,6 +111,11 @@ case "$1" in
         echo "  lifeos analyze            # AI分析生活模式和建议"
         echo "  lifeos plan               # 生成明日优化计划"
         echo "  lifeos advice             # 获取AI生活建议"
+        echo ""
+        echo "Anki 同步命令："
+        echo "  lifeos setup-anki [PAGE_ID]  # 创建 Anki Cards 数据库"
+        echo "  lifeos sync-anki          # 同步 Notion 到 Anki (生成 .apkg)"
+        echo "  lifeos sync-anki --dry-run   # 试运行（不修改数据）"
         echo ""
         echo "这是你的AI个人助理，可以："
         echo "• 理解你的自然语言描述"
