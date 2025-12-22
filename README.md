@@ -7,6 +7,7 @@
 - 🎯 **Todoist 集成** - 跨平台任务管理（Windows/Mac/iPhone/Android/Web）
 - 🧠 **自然语言处理** - 智能解析任务描述，自动分类和优先级分配
 - 📊 **Logseq 生活追踪** - 日志记录、数据追踪、周报生成
+- 🧩 **Notion-Anki 同步** - 在 Notion 管理卡片，自动同步到 Anki
 - 🤖 **AI 顾问** - 基于历史数据的生活模式分析和建议
 - 📈 **数据导出分析** - 完整的任务数据导出和可视化支持
 
@@ -28,7 +29,7 @@ pip3 install todoist-api-python
 ./lifeos setup-goals
 ```
 
-📖 **详细文档**: 查看 [TODOIST_QUICKSTART.md](TODOIST_QUICKSTART.md) 获取完整设置指南
+📖 **详细文档**: 查看 [ANKI_SYNC_QUICKSTART.md](docs/ANKI_SYNC_QUICKSTART.md) 和 [ANKI_SETTINGS_FINAL.md](docs/ANKI_SETTINGS_FINAL.md) 获取 Anki 同步指南
 
 ### 常用命令
 
@@ -65,18 +66,25 @@ LifeOS/
 ├── config/                      # 系统配置
 │   ├── todoist_config.json     # Todoist API 配置和项目映射
 │   ├── assistant_profile.json  # AI 助手配置
-│   └── logseq_templates.json   # Logseq 模板
+│   ├── logseq_templates.json   # Logseq 模板
+│   └── anki_sync_config.json   # Anki 同步配置
 ├── scripts/                     # 核心脚本
 │   ├── todoist_manager.py      # Todoist API 管理器
 │   ├── personal_assistant.py   # 自然语言任务处理
 │   ├── setup_goals.py          # 快速目标设置
 │   ├── logseq_tracker.py       # 生活追踪系统
-│   └── ai_advisor.py           # AI 顾问分析
+│   ├── ai_advisor.py           # AI 顾问分析
+│   ├── sync_notion_anki.py     # Anki 同步脚本
+│   └── setup_anki_database.py  # Anki 数据库设置
+├── docs/                        # 文档
+│   ├── ANKI_SETTINGS_FINAL.md  # Anki 设置指南
+│   ├── ANKI_SYNC_QUICKSTART.md # Anki 同步快速入门
+│   └── NOTION_ANKI_SYNC_PLAN.md # Anki 同步实现计划
 ├── data/                        # 本地数据存储（不同步）
 ├── archive/                     # 历史存档（不同步）
+├── notion-kit/                  # Notion API 封装
 ├── lifeos                       # 主入口脚本
 ├── CLAUDE.md                    # Claude Code AI 助手指南
-├── TODOIST_QUICKSTART.md        # Todoist 快速入门
 └── README.md                    # 本文档
 ```
 
@@ -187,5 +195,5 @@ A: Windows、Mac、Linux（WSL）、iPhone、Android 全平台同步
 
 *"The best time to plant a tree was 10 years ago. The second best time is now."*
 
-**最后更新:** 2025-10-14
+**最后更新:** 2025-12-22
 **当前版本:** v3.0 - Todoist 集成完整版

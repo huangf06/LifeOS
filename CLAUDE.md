@@ -21,19 +21,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./lifeos list-tasks                  # List all tasks
 
 # Anki Sync (Notion → Anki)
-./lifeos setup-anki [PAGE_ID]        # Create Anki Cards database
+./lifeos setup-anki [PAGE_ID]        # Create Anki Cards database in Notion
 ./lifeos sync-anki                   # Sync Notion to Anki (.apkg)
-./lifeos sync-anki --dry-run         # Test sync without changes
+./lifeos sync-anki --dry-run         # Test sync without changes (safe mode)
 
 # Life Tracking (Logseq Integration)
 ./lifeos today                       # Initialize today's journal
-./lifeos log work 'content' 8 '2h'  # Log activity
+./lifeos log work 'content' 8 '2h'  # Log activity with rating and duration
 ./lifeos report                      # Generate weekly report
 ./lifeos sync                        # Git sync Logseq
 
 # AI Advisor
-./lifeos analyze                     # Analyze life patterns
-./lifeos plan                        # Generate optimized plans
+./lifeos analyze                     # Analyze life patterns from historical data
+./lifeos plan                        # Generate optimized plans based on analysis
 ```
 
 ---
@@ -131,7 +131,6 @@ Notion to Anki synchronization system:
 LifeOS/
 ├── lifeos                        # Main entry point
 ├── CLAUDE.md                     # This file
-├── TODOIST_QUICKSTART.md         # User quickstart guide
 ├── README.md                     # Project readme
 │
 ├── .github/
@@ -153,6 +152,11 @@ LifeOS/
 │   ├── logseq_templates.json     # Journal templates
 │   └── anki_sync_config.json     # Anki sync settings
 │
+├── docs/                         # Documentation
+│   ├── ANKI_SETTINGS_FINAL.md    # Optimized Anki settings guide
+│   ├── ANKI_SYNC_QUICKSTART.md   # Anki sync quickstart
+│   └── NOTION_ANKI_SYNC_PLAN.md  # Anki sync implementation plan
+│
 ├── notion-kit/
 │   ├── .env                      # Notion & Telegram credentials
 │   └── notion_wrap.py            # Notion API wrapper (2025-09-03)
@@ -161,9 +165,11 @@ LifeOS/
 │   ├── anki_sync_*.apkg          # Generated Anki packages
 │   └── anki_sync_state.json      # Sync state tracking
 │
-├── schedule_management/          # Schedule tracking
-└── career/                       # Career documents
-
+├── archive/                      # Historical documents
+│   ├── TODOIST_QUICKSTART.md     # Todoist setup guide (archived)
+│   └── ANKI_SETTINGS_*.md        # Old Anki settings versions
+│
+└── knowledge/                    # Personal knowledge base
 ```
 
 ---
@@ -345,13 +351,15 @@ The system has permissions for:
 
 ---
 
-## Support
+## Documentation
 
-- **Documentation**: `./lifeos help`
-- **Quickstart**: See `TODOIST_QUICKSTART.md`
-- **API Docs**: https://developer.todoist.com/rest/v2/
+- **Getting Help**: `./lifeos help`
+- **Anki Sync Guide**: See `docs/ANKI_SYNC_QUICKSTART.md`
+- **Anki Settings**: See `docs/ANKI_SETTINGS_FINAL.md`
+- **Todoist API**: https://developer.todoist.com/rest/v2/
+- **Notion API**: https://developers.notion.com/
 - **Todoist SDK**: https://github.com/Doist/todoist-api-python
 
 ---
 
-**Last Updated**: 2025-01-14
+**Last Updated**: 2025-12-22
