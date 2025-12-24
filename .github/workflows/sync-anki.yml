@@ -1,9 +1,9 @@
 name: Notion to Anki Sync
 
 on:
-  # 每天北京时间 08:00 (UTC 00:00) 自动运行
+  # 每天阿姆斯特丹时间 06:00 (UTC 05:00) 自动运行
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 5 * * *'
 
   # 支持手动触发
   workflow_dispatch:
