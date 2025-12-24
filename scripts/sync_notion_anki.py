@@ -212,12 +212,12 @@ class AnkiSyncManager:
         )
         all_cards.extend(cards_from_anki)
 
-        # 2. 查询 Cortex 数据库（Status = New，表示未同步）
+        # 2. 查询 Cortex 数据库（Last Reviewed 为空，表示未同步）
         if self.cortex_data_source_id:
             cortex_filter = {
-                "property": "Status",
-                "select": {
-                    "equals": "New"
+                "property": "Last Reviewed",
+                "date": {
+                    "is_empty": True
                 }
             }
             cards_from_cortex = self._query_database(
