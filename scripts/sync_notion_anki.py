@@ -303,42 +303,54 @@ class AnkiSyncManager:
         has_status = "Status" in props and props["Status"].get("type") == "select"
         return has_name and has_type and has_status
 
+    def _get_page_content(self, page_id: str) -> str:
+        """获取页面正文内容"""
+        try:
+            blocks = self.notion.blocks.children.list(page_id)
+            content_parts = []
+
+            for block in blocks.get("results", []):
+                block_type = block.get("type")
+                if block_type in ["paragraph", "bulleted_list_item", "numbered_list_item", "heading_1", "heading_2", "heading_3"]:
+                    texts = block.get(block_type, {}).get("rich_text", [])
+                    for text in texts:
+                        content_parts.append(text.get("plain_text", ""))
+
+            return "\n".join(content_parts).strip()
+        except Exception as e:
+            print(f"   ⚠️  获取页面内容失败 {page_id[:8]}: {e}")
+            return ""
+
     def _convert_cortex_to_anki(self, page: Dict) -> tuple:
         """将 Cortex 条目转换为 Anki 卡片格式 (front, back, deck, source, tags)"""
         name = self._extract_property(page, "Name", "title")
         card_type = self._extract_property(page, "Type", "select")
-        ai_summary = self._extract_property(page, "AI Summary", "rich_text")
         source = self._extract_property(page, "Source", "rich_text") or ""
         tags = self._extract_property(page, "Tags", "multi_select") or []
+        page_id = page["id"]
 
         if not name:
             return None, None, None, None, None
 
-        # 解析 Name 来构建 Front/Back
-        front = ""
-        back = ""
+        # 获取页面正文作为 Back
+        back = self._get_page_content(page_id)
+        if not back:
+            back = "（无内容）"
+
+        # Front 使用标题，根据前缀判断牌组
+        front = name
         deck = "Vocabulary"  # 默认牌组
 
         # 处理不同类型的条目
         if name.startswith("翻译："):
-            # 翻译条目：Front = 中文，Back = AI Summary (应该是英文翻译)
             front = name.replace("翻译：", "").strip()
-            back = ai_summary or "（待补充翻译）"
             deck = "Translation"
         elif name.startswith("单词："):
-            # 单词条目：Front = 单词，Back = AI Summary (应该是定义)
             front = name.replace("单词：", "").strip()
-            back = ai_summary or "（待补充定义）"
             deck = "Vocabulary"
         elif name.startswith("短语："):
-            # 短语条目：Front = 短语，Back = AI Summary (应该是含义)
             front = name.replace("短语：", "").strip()
-            back = ai_summary or "（待补充含义）"
             deck = "Phrases"
-        else:
-            # 其他：直接使用 Name 作为 Front
-            front = name
-            back = ai_summary or "（待补充内容）"
 
         # 添加 Cortex 标签
         if "Cortex" not in tags:
