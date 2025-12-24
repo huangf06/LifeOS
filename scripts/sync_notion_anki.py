@@ -67,6 +67,7 @@ class AnkiSyncManager:
         # 初始化 Notion 客户端
         self.notion_token = os.getenv("NOTION_TOKEN")
         self.anki_database_id = os.getenv("ANKI_DATABASE_ID")
+        self.cortex_database_id = os.getenv("DATABASE_ID")  # Cortex database
 
         if not self.notion_token:
             raise ValueError("❌ 未找到 NOTION_TOKEN，请在 notion-kit/.env 中设置")
@@ -76,8 +77,9 @@ class AnkiSyncManager:
         # 使用 Notion API 2025-09-03
         self.notion = Client(auth=self.notion_token, notion_version="2025-09-03")
 
-        # 获取 data_source_id
-        self.data_source_id = self._get_data_source_id()
+        # 获取 data_source_id for both databases
+        self.anki_data_source_id = self._get_data_source_id(self.anki_database_id)
+        self.cortex_data_source_id = self._get_data_source_id(self.cortex_database_id) if self.cortex_database_id else None
 
         # Telegram 配置
         self.telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -138,20 +140,20 @@ class AnkiSyncManager:
         with open(STATE_FILE, 'w', encoding='utf-8') as f:
             json.dump(self.state, f, indent=2, ensure_ascii=False)
 
-    def _get_data_source_id(self) -> str:
+    def _get_data_source_id(self, database_id: str) -> str:
         """获取数据源 ID (API 2025-09-03)"""
         try:
-            database = self.notion.databases.retrieve(self.anki_database_id)
+            database = self.notion.databases.retrieve(database_id)
             data_sources = database.get("data_sources", [])
 
             if data_sources:
                 return data_sources[0]["id"]
             else:
                 # 如果没有 data_sources，直接使用 database_id
-                return self.anki_database_id
+                return database_id
         except Exception as e:
             print(f"⚠️  获取 data_source_id 失败: {e}")
-            return self.anki_database_id
+            return database_id
 
     def _create_anki_model(self) -> genanki.Model:
         """创建 Anki 卡片模型"""
@@ -191,20 +193,48 @@ class AnkiSyncManager:
         )
 
     def query_unsynced_cards(self) -> List[Dict]:
-        """查询未同步的卡片"""
+        """查询未同步的卡片（从 Anki Cards 和 Cortex 数据库）"""
         print("🔍 查询未同步的卡片...")
 
-        # 简化过滤器：只查询 Synced = false 或未设置（默认为 false）
-        filter_obj = {
+        all_cards = []
+
+        # 1. 查询 Anki Cards 数据库（Synced = false）
+        anki_filter = {
             "property": "Synced",
             "checkbox": {
                 "equals": False
             }
         }
+        cards_from_anki = self._query_database(
+            self.anki_data_source_id,
+            anki_filter,
+            "Anki Cards"
+        )
+        all_cards.extend(cards_from_anki)
 
+        # 2. 查询 Cortex 数据库（Status = New，表示未同步）
+        if self.cortex_data_source_id:
+            cortex_filter = {
+                "property": "Status",
+                "select": {
+                    "equals": "New"
+                }
+            }
+            cards_from_cortex = self._query_database(
+                self.cortex_data_source_id,
+                cortex_filter,
+                "Cortex"
+            )
+            all_cards.extend(cards_from_cortex)
+
+        print(f"   总计找到 {len(all_cards)} 张未同步的卡片")
+        return all_cards
+
+    def _query_database(self, data_source_id: str, filter_obj: Dict, db_name: str) -> List[Dict]:
+        """查询单个数据库"""
         try:
             # API 2025-09-03: 使用 data_sources 端点
-            url = f"https://api.notion.com/v1/data_sources/{self.data_source_id}/query"
+            url = f"https://api.notion.com/v1/data_sources/{data_source_id}/query"
             headers = {
                 "Authorization": f"Bearer {self.notion_token}",
                 "Content-Type": "application/json",
@@ -220,20 +250,21 @@ class AnkiSyncManager:
 
             # 打印详细错误信息（如果有）
             if response.status_code != 200:
-                print(f"   API 响应: {response.status_code}")
+                print(f"   ⚠️  {db_name} 查询失败: {response.status_code}")
                 print(f"   错误详情: {response.text}")
+                return []
 
             response.raise_for_status()
 
             data = response.json()
             cards = data.get("results", [])
-            print(f"   找到 {len(cards)} 张未同步的卡片")
+            print(f"   从 {db_name} 找到 {len(cards)} 张卡片")
             return cards
         except requests.exceptions.RequestException as e:
-            print(f"❌ 查询失败: {e}")
+            print(f"   ⚠️  {db_name} 查询失败: {e}")
             return []
         except Exception as e:
-            print(f"❌ 查询错误: {e}")
+            print(f"   ⚠️  {db_name} 查询错误: {e}")
             return []
 
     def _extract_property(self, page: Dict, prop_name: str, prop_type: str) -> Optional[str]:
@@ -263,6 +294,58 @@ class AnkiSyncManager:
 
         return None
 
+    def _is_cortex_card(self, page: Dict) -> bool:
+        """判断是否为 Cortex 数据库的卡片"""
+        props = page.get("properties", {})
+        # Cortex 特有属性：Name (title), Type, Status
+        has_name = "Name" in props and props["Name"].get("type") == "title"
+        has_type = "Type" in props and props["Type"].get("type") == "select"
+        has_status = "Status" in props and props["Status"].get("type") == "select"
+        return has_name and has_type and has_status
+
+    def _convert_cortex_to_anki(self, page: Dict) -> tuple:
+        """将 Cortex 条目转换为 Anki 卡片格式 (front, back, deck, source, tags)"""
+        name = self._extract_property(page, "Name", "title")
+        card_type = self._extract_property(page, "Type", "select")
+        ai_summary = self._extract_property(page, "AI Summary", "rich_text")
+        source = self._extract_property(page, "Source", "rich_text") or ""
+        tags = self._extract_property(page, "Tags", "multi_select") or []
+
+        if not name:
+            return None, None, None, None, None
+
+        # 解析 Name 来构建 Front/Back
+        front = ""
+        back = ""
+        deck = "Vocabulary"  # 默认牌组
+
+        # 处理不同类型的条目
+        if name.startswith("翻译："):
+            # 翻译条目：Front = 中文，Back = AI Summary (应该是英文翻译)
+            front = name.replace("翻译：", "").strip()
+            back = ai_summary or "（待补充翻译）"
+            deck = "Translation"
+        elif name.startswith("单词："):
+            # 单词条目：Front = 单词，Back = AI Summary (应该是定义)
+            front = name.replace("单词：", "").strip()
+            back = ai_summary or "（待补充定义）"
+            deck = "Vocabulary"
+        elif name.startswith("短语："):
+            # 短语条目：Front = 短语，Back = AI Summary (应该是含义)
+            front = name.replace("短语：", "").strip()
+            back = ai_summary or "（待补充含义）"
+            deck = "Phrases"
+        else:
+            # 其他：直接使用 Name 作为 Front
+            front = name
+            back = ai_summary or "（待补充内容）"
+
+        # 添加 Cortex 标签
+        if "Cortex" not in tags:
+            tags.append("Cortex")
+
+        return front, back, deck, source, tags
+
     def generate_anki_guid(self, notion_page_id: str) -> str:
         """从 Notion Page ID 生成稳定的 Anki GUID"""
         hash_hex = hashlib.md5(notion_page_id.encode()).hexdigest()
@@ -282,17 +365,25 @@ class AnkiSyncManager:
         deck_prefix = self.config["anki"]["deck_prefix"]
 
         for page in cards:
-            # 提取卡片信息
-            front = self._extract_property(page, "Front", "title")
-            back = self._extract_property(page, "Back", "rich_text")
-            deck_name = self._extract_property(page, "Deck", "select")
-            source = self._extract_property(page, "Source", "url") or ""
-            tags = self._extract_property(page, "Tags", "multi_select") or []
+            # 判断是 Anki Cards 还是 Cortex 卡片
+            if self._is_cortex_card(page):
+                # Cortex 卡片：转换格式
+                front, back, deck_name, source, tags = self._convert_cortex_to_anki(page)
+                if not front or not back:
+                    print(f"   ⏭️  跳过: Cortex 卡片转换失败")
+                    continue
+            else:
+                # Anki Cards 数据库：直接提取
+                front = self._extract_property(page, "Front", "title")
+                back = self._extract_property(page, "Back", "rich_text")
+                deck_name = self._extract_property(page, "Deck", "select")
+                source = self._extract_property(page, "Source", "url") or ""
+                tags = self._extract_property(page, "Tags", "multi_select") or []
 
-            # 验证必填字段
-            if not front or not back:
-                print(f"   ⏭️  跳过: 缺少 Front 或 Back")
-                continue
+                # 验证必填字段
+                if not front or not back:
+                    print(f"   ⏭️  跳过: 缺少 Front 或 Back")
+                    continue
 
             # 构建完整 Deck 名称
             full_deck_name = f"{deck_prefix}::{deck_name}" if deck_name else deck_prefix
@@ -386,13 +477,24 @@ class AnkiSyncManager:
         for page in cards:
             page_id = page["id"]
             try:
-                self.notion.pages.update(
-                    page_id=page_id,
-                    properties={
-                        "Synced": {"checkbox": True},
-                        "Last Synced": {"date": {"start": today}}
-                    }
-                )
+                if self._is_cortex_card(page):
+                    # Cortex 卡片：更新 Status 为 Learning
+                    self.notion.pages.update(
+                        page_id=page_id,
+                        properties={
+                            "Status": {"select": {"name": "Learning"}},
+                            "Last Reviewed": {"date": {"start": today}}
+                        }
+                    )
+                else:
+                    # Anki Cards：更新 Synced 为 true
+                    self.notion.pages.update(
+                        page_id=page_id,
+                        properties={
+                            "Synced": {"checkbox": True},
+                            "Last Synced": {"date": {"start": today}}
+                        }
+                    )
                 print(f"   ✓ 已更新: {page_id[:8]}...")
             except APIResponseError as e:
                 print(f"   ❌ 更新失败 {page_id[:8]}: {e}")
