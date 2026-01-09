@@ -1,0 +1,29 @@
+{
+  "api_token": "",
+  "api_base_url": "https://api.frdic.com/api/open/v1",
+  "setup_date": "2026-01-09",
+  "sync_settings": {
+    "language": "en",
+    "page_size": 50,
+    "studylist_id": "0",
+    "sync_to_notion": true,
+    "update_synced_status": true
+  },
+  "notion_mapping": {
+    "deck_name": "Vocabulary",
+    "auto_add_tags": ["欧路", "vocabulary"]
+  },
+  "filters": {
+    "min_word_length": 2,
+    "exclude_phrases": false,
+    "sync_only_new": true
+  },
+  "notes": [
+    "API Token from https://my.eudic.net/OpenAPI/Authorization",
+    "IMPORTANT: Set EUDIC_TOKEN environment variable or add token here (not recommended for git)",
+    "For GitHub Actions, add EUDIC_TOKEN to repository secrets",
+    "studylist_id=0 means default word book",
+    "Language: en (English), zh (Chinese)",
+    "Syncs to Notion Anki Cards database, then auto-syncs to Anki via existing workflow"
+  ]
+}

@@ -84,6 +84,14 @@ case "$1" in
     "setup-anki")
         python3 "$SCRIPT_DIR/scripts/setup_anki_database.py" "$2"
         ;;
+    # 欧路词典同步命令
+    "sync-eudic")
+        shift  # 移除 sync-eudic 参数
+        python3 "$SCRIPT_DIR/scripts/sync_eudic_notion.py" "$@"
+        ;;
+    "test-eudic")
+        python3 "$SCRIPT_DIR/scripts/sync_eudic_notion.py" --dry-run
+        ;;
     "help")
         echo "🤖 LifeOS Personal Assistant 帮助"
         echo ""
@@ -116,6 +124,11 @@ case "$1" in
         echo "  lifeos setup-anki [PAGE_ID]  # 创建 Anki Cards 数据库"
         echo "  lifeos sync-anki          # 同步 Notion 到 Anki (生成 .apkg)"
         echo "  lifeos sync-anki --dry-run   # 试运行（不修改数据）"
+        echo ""
+        echo "欧路词典同步命令："
+        echo "  lifeos sync-eudic         # 同步欧路生词本到 Notion (然后自动到 Anki)"
+        echo "  lifeos test-eudic         # 测试欧路连接（不写入数据）"
+        echo "  lifeos sync-eudic --limit 5  # 小批量测试（只同步前5个单词）"
         echo ""
         echo "这是你的AI个人助理，可以："
         echo "• 理解你的自然语言描述"

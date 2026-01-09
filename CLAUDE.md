@@ -25,6 +25,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ./lifeos sync-anki                   # Sync Notion to Anki (.apkg)
 ./lifeos sync-anki --dry-run         # Test sync without changes (safe mode)
 
+# Eudic Sync (欧路词典 → Notion → Anki)
+./lifeos sync-eudic                  # Sync Eudic vocabulary to Notion
+./lifeos test-eudic                  # Test Eudic API connection (dry-run)
+./lifeos sync-eudic --limit 10       # Test with limited number of words
+
 # Life Tracking (Logseq Integration)
 ./lifeos today                       # Initialize today's journal
 ./lifeos log work 'content' 8 '2h'  # Log activity with rating and duration
@@ -94,6 +99,22 @@ Notion to Anki synchronization system:
 - Dry-run mode for testing
 - Cross-platform Anki import (mobile & desktop)
 
+### 7. Eudic Sync Manager (`scripts/sync_eudic_notion.py`)
+Eudic (欧路词典) vocabulary synchronization to Notion:
+- Fetch vocabulary from Eudic API automatically
+- Parse word, phonetics, and definitions
+- Add to Notion "Anki Cards" database
+- Track sync state to avoid duplicates
+- Batch and incremental sync support
+
+**Key Features:**
+- Official Eudic OpenAPI integration
+- Auto-tags: "欧路", "vocabulary"
+- Deck: Vocabulary (customizable)
+- Supports --limit flag for testing
+- GitHub Actions automation (runs before Anki sync)
+- Format: Front (word) + Back (phonetic + definition)
+
 ---
 
 ## Configuration Files
@@ -102,6 +123,7 @@ Notion to Anki synchronization system:
 - `config/assistant_profile.json` - Assistant behavior configuration
 - `config/logseq_templates.json` - Logseq journal templates
 - `config/anki_sync_config.json` - Anki sync behavior and deck settings
+- `config/eudic_config.json` - Eudic (欧路词典) API token and sync settings
 - `notion-kit/.env` - Notion and Telegram credentials
 
 ### Todoist Project Mapping
@@ -275,6 +297,35 @@ python3 scripts/setup_goals.py --goal english
 # File location: ~/LifeOS/data/todoist_export_YYYYMMDD_HHMMSS.json
 ```
 
+### Eudic Vocabulary Sync
+
+**Setup:**
+1. Get Eudic API Token from https://my.eudic.net/OpenAPI/Authorization
+2. Update `config/eudic_config.json` with your token
+3. (Optional) Add `EUDIC_TOKEN` to GitHub Secrets for automation
+
+**Manual Sync:**
+```bash
+# Test connection (dry-run)
+./lifeos test-eudic
+
+# Small batch test (5 words)
+./lifeos sync-eudic --limit 5
+
+# Full sync (all vocabulary)
+./lifeos sync-eudic
+```
+
+**GitHub Actions Setup:**
+1. Go to repository Settings → Secrets and variables → Actions
+2. Add secret: `EUDIC_TOKEN` = your API token
+3. Workflow runs daily at 05:00 UTC (automatic)
+
+**Workflow:**
+```
+欧路词典生词本 → Eudic API → Notion Anki Cards → sync-anki → Telegram (.apkg)
+```
+
 ---
 
 ## Testing
@@ -358,8 +409,9 @@ The system has permissions for:
 - **Anki Settings**: See `docs/ANKI_SETTINGS_FINAL.md`
 - **Todoist API**: https://developer.todoist.com/rest/v2/
 - **Notion API**: https://developers.notion.com/
+- **Eudic OpenAPI**: https://my.eudic.net/OpenAPI/Doc_Index
 - **Todoist SDK**: https://github.com/Doist/todoist-api-python
 
 ---
 
-**Last Updated**: 2025-12-22
+**Last Updated**: 2026-01-09
