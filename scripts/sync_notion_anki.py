@@ -286,13 +286,20 @@ class AnkiSyncManager:
             return select["name"] if select else None
         elif prop_type == "multi_select":
             items = prop.get("multi_select", [])
-            return [item["name"] for item in items]
+            # Sanitize tags: Anki doesn't allow spaces in tags
+            return [self._sanitize_tag(item["name"]) for item in items]
         elif prop_type == "url":
             return prop.get("url")
         elif prop_type == "checkbox":
             return prop.get("checkbox", False)
 
         return None
+
+    def _sanitize_tag(self, tag: str) -> str:
+        """Sanitize tag for Anki: replace spaces with underscores"""
+        if not tag:
+            return tag
+        return tag.replace(" ", "_")
 
     def _is_cortex_card(self, page: Dict) -> bool:
         """判断是否为 Cortex 数据库的卡片"""
