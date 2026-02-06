@@ -15,6 +15,7 @@ import json
 import hashlib
 import requests
 import argparse
+import time
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Optional
@@ -24,6 +25,7 @@ from dotenv import load_dotenv
 try:
     from notion_client import Client
     from notion_client.errors import APIResponseError
+    from httpx import HTTPStatusError
 except ImportError:
     print("❌ 缺少依赖: notion-client")
     print("请运行: pip install notion-client")
@@ -39,6 +41,41 @@ STATE_FILE = Path(__file__).parent.parent / "data" / "eudic_sync_state.json"
 
 # 确保 data 目录存在
 STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+
+def retry_on_502(max_retries=3, delay=2):
+    """
+    装饰器：在遇到 502 Bad Gateway 错误时自动重试
+
+    Args:
+        max_retries: 最大重试次数
+        delay: 每次重试间隔（秒）
+    """
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(max_retries + 1):
+                try:
+                    return func(*args, **kwargs)
+                except (APIResponseError, HTTPStatusError) as e:
+                    last_exception = e
+                    # 检查是否是 502 错误
+                    status_code = None
+                    if hasattr(e, 'status'):
+                        status_code = e.status
+                    elif hasattr(e, 'response') and hasattr(e.response, 'status_code'):
+                        status_code = e.response.status_code
+
+                    if status_code == 502 and attempt < max_retries:
+                        wait_time = delay * (2 ** attempt)  # 指数退避
+                        print(f"   ⚠️  Notion API 502 错误，{wait_time}秒后重试 ({attempt + 1}/{max_retries})...")
+                        time.sleep(wait_time)
+                        continue
+                    else:
+                        raise
+            raise last_exception
+        return wrapper
+    return decorator
 
 
 class EudicSyncManager:
@@ -259,6 +296,7 @@ class EudicSyncManager:
 
         return properties
 
+    @retry_on_502(max_retries=3, delay=2)
     def add_to_notion(self, word_data: Dict) -> bool:
         """
         将单词添加到 Notion Anki Cards 数据库
@@ -336,14 +374,19 @@ class EudicSyncManager:
             word = word_data.get("word", "")
             print(f"[{i}/{len(new_words)}] {word}")
 
-            if self.add_to_notion(word_data):
-                success_count += 1
-                # 标记为已同步
-                if "synced_words" not in self.state:
-                    self.state["synced_words"] = []
-                self.state["synced_words"].append(word)
-            else:
+            try:
+                if self.add_to_notion(word_data):
+                    success_count += 1
+                    # 标记为已同步
+                    if "synced_words" not in self.state:
+                        self.state["synced_words"] = []
+                    self.state["synced_words"].append(word)
+                else:
+                    failed_count += 1
+            except Exception as e:
+                print(f"   ❌ 添加失败 ({word}): {e}")
                 failed_count += 1
+                # 继续处理下一个单词，不中断流程
 
         # 4. 保存状态
         self.state["total_synced"] = self.state.get("total_synced", 0) + success_count
