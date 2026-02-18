@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hotpot Cooking Guide</title>
+<style>
+  @page { size: A4; margin: 15mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    padding: 15mm;
+    max-width: 210mm;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #c0392b;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 18px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .card {
+    border: 2px solid #e74c3c;
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #fff8f8;
+  }
+  .card h2 {
+    font-size: 16px;
+    color: #c0392b;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f0c0b0;
+    padding-bottom: 4px;
+  }
+  .card h2 .icon { margin-right: 6px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  td { padding: 3px 4px; }
+  td:first-child { width: 55%; }
+  td:last-child {
+    text-align: right;
+    font-weight: bold;
+    color: #c0392b;
+    white-space: nowrap;
+  }
+  tr:nth-child(even) { background: #fff0ee; }
+  .tips {
+    margin-top: 14px;
+    border: 2px dashed #e67e22;
+    border-radius: 10px;
+    padding: 12px 16px;
+    background: #fffaf3;
+  }
+  .tips h2 {
+    font-size: 16px;
+    color: #e67e22;
+    margin-bottom: 8px;
+  }
+  .tips ul {
+    font-size: 13px;
+    padding-left: 20px;
+    line-height: 1.7;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 20px;
+    color: #c0392b;
+  }
+</style>
+</head>
+<body>
+
+<h1>Hotpot Cooking Guide</h1>
+<p class="subtitle">Wait for the broth to boil, then add ingredients and cook to your liking!</p>
+
+<div class="grid">
+
+  <div class="card">
+    <h2><span class="icon">🥩</span> Meat</h2>
+    <table>
+      <tr><td>Beef slices (thin)</td><td>10-15 sec</td></tr>
+      <tr><td>Lamb slices (thin)</td><td>10-15 sec</td></tr>
+      <tr><td>Shrimp</td><td>2-3 min</td></tr>
+      <tr><td>Fish balls</td><td>3-5 min</td></tr>
+      <tr><td>Surimi / fishcake</td><td>2-3 min</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">🥬</span> Vegetables</h2>
+    <table>
+      <tr><td>Napa cabbage</td><td>2-3 min</td></tr>
+      <tr><td>Spinach</td><td>30-60 sec</td></tr>
+      <tr><td>Corn</td><td>5-8 min</td></tr>
+      <tr><td>Potato slices</td><td>3-5 min</td></tr>
+      <tr><td>Tofu</td><td>3-5 min</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">🍄</span> Mushrooms</h2>
+    <table>
+      <tr><td>Enoki mushrooms</td><td>1-2 min</td></tr>
+      <tr><td>Shiitake mushrooms</td><td>3-5 min</td></tr>
+      <tr><td>Wood ear mushrooms</td><td>3-5 min</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">🍜</span> Noodles & Starches</h2>
+    <table>
+      <tr><td>Glass noodles (vermicelli)</td><td>3-5 min</td></tr>
+      <tr><td>Udon noodles</td><td>3-5 min</td></tr>
+      <tr><td>Egg noodles</td><td>3-5 min</td></tr>
+      <tr><td>Dumplings (frozen)</td><td>5-8 min</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<div class="tips">
+  <h2>💡 Tips</h2>
+  <ul>
+    <li><b>Thin meat slices</b> — just swish a few times in the broth and they're done. Overcooking makes them tough!</li>
+    <li><b>Leafy greens</b> — add last, they cook fast and shrink a lot</li>
+    <li><b>Mushrooms & root veggies</b> — put in early, they need more time</li>
+    <li><b>Noodles</b> — save for the end! The broth is richest after cooking all the other ingredients</li>
+    <li><b>Dipping sauce</b> — mix your own: sesame paste + soy sauce + chili oil + garlic + vinegar + cilantro</li>
+    <li><b>Raw vs. cooked</b> — use the shared serving chopsticks to put raw food in the pot, and your own chopsticks to eat</li>
+    <li><b>Don't overcrowd</b> the pot — cook in small batches for best results</li>
+  </ul>
+</div>
+
+<p class="footer">Happy Lunar New Year!</p>
+
+</body>
+</html>
