@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Hotpot Cooking Guide</title>
 <style>
-  @page { size: A4; margin: 15mm; }
+  @page { size: A4; margin: 15mm; margin-top: 10mm; margin-bottom: 10mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -17,6 +17,18 @@
     font-size: 28px;
     color: #c0392b;
     margin-bottom: 4px;
+    position: relative;
+  }
+  .fu {
+    color: #c0392b;
+    font-size: 60px;
+    font-weight: bold;
+    opacity: 0.15;
+    position: absolute;
+    top: -18px;
+    right: 10px;
+    transform: rotate(180deg);
+    font-family: 'KaiTi', 'STKaiti', serif;
   }
   .subtitle {
     text-align: center;
@@ -84,50 +96,52 @@
 </head>
 <body>
 
-<h1>Hotpot Cooking Guide</h1>
-<p class="subtitle">Wait for the broth to boil, then add ingredients and cook to your liking!</p>
+<h1><span class="fu">福</span>Hotpot Cooking Guide</h1>
+<p class="subtitle">3 broths: 🔴 Spicy Oil (hot!) · 🟠 Tomato (mild) · 🟡 Mushroom (mild)<br>Wait for the broth to boil, then add ingredients!</p>
 
 <div class="grid">
 
   <div class="card">
-    <h2><span class="icon">🥩</span> Meat</h2>
+    <h2><span class="icon">🥩</span> Meat & Seafood</h2>
     <table>
-      <tr><td>Beef slices (thin)</td><td>10-15 sec</td></tr>
-      <tr><td>Lamb slices (thin)</td><td>10-15 sec</td></tr>
-      <tr><td>Shrimp</td><td>2-3 min</td></tr>
-      <tr><td>Fish balls</td><td>3-5 min</td></tr>
-      <tr><td>Surimi / fishcake</td><td>2-3 min</td></tr>
+      <tr><td>Beef rib eye slices</td><td>10-15 sec</td></tr>
+      <tr><td>Lamb slices</td><td>10-15 sec</td></tr>
+      <tr><td>Shrimp paste (spoon into broth)</td><td>2-3 min</td></tr>
+      <tr><td>Tilapia fillets</td><td>2-3 min</td></tr>
+      <tr><td>Surimi sticks</td><td>2-3 min</td></tr>
     </table>
   </div>
 
   <div class="card">
-    <h2><span class="icon">🥬</span> Vegetables</h2>
+    <h2><span class="icon">🧆</span> Meatballs & Fried</h2>
+    <table>
+      <tr><td>Beef meatballs</td><td>4-5 min</td></tr>
+      <tr><td>Mushroom pork balls</td><td>4-5 min</td></tr>
+      <tr><td>Crispy pork (add late!)</td><td>1-2 min</td></tr>
+      <tr><td>Mini dough sticks</td><td>1-2 min</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">🥬</span> Veggies & Tofu</h2>
     <table>
       <tr><td>Napa cabbage</td><td>2-3 min</td></tr>
-      <tr><td>Spinach</td><td>30-60 sec</td></tr>
-      <tr><td>Corn</td><td>5-8 min</td></tr>
-      <tr><td>Potato slices</td><td>3-5 min</td></tr>
-      <tr><td>Tofu</td><td>3-5 min</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <h2><span class="icon">🍄</span> Mushrooms</h2>
-    <table>
       <tr><td>Enoki mushrooms</td><td>1-2 min</td></tr>
-      <tr><td>Shiitake mushrooms</td><td>3-5 min</td></tr>
       <tr><td>Wood ear mushrooms</td><td>3-5 min</td></tr>
+      <tr><td>Kelp</td><td>3-5 min</td></tr>
+      <tr><td>Beancurd knots</td><td>3-5 min</td></tr>
+      <tr><td>Dried bean curd</td><td>3-5 min</td></tr>
     </table>
   </div>
 
   <div class="card">
     <h2><span class="icon">🍜</span> Noodles & Starches</h2>
     <table>
+      <tr><td>Sweet potato noodles</td><td>3-5 min</td></tr>
       <tr><td>Glass noodles (vermicelli)</td><td>3-5 min</td></tr>
       <tr><td>Udon noodles</td><td>3-5 min</td></tr>
-      <tr><td>Egg noodles</td><td>3-5 min</td></tr>
-      <tr><td>Dumplings (frozen)</td><td>5-8 min</td></tr>
     </table>
+    <p style="font-size:12px;color:#888;margin-top:6px;">🥟 Dumplings & xiao long bao served separately!</p>
   </div>
 
 </div>
@@ -135,12 +149,13 @@
 <div class="tips">
   <h2>💡 Tips</h2>
   <ul>
+    <li><b>Prep ahead</b> — wood ear mushrooms & kelp need to be soaked in water for 30 min before cooking</li>
     <li><b>Thin meat slices</b> — just swish a few times in the broth and they're done. Overcooking makes them tough!</li>
-    <li><b>Leafy greens</b> — add last, they cook fast and shrink a lot</li>
-    <li><b>Mushrooms & root veggies</b> — put in early, they need more time</li>
+    <li><b>Shrimp paste</b> — scoop with a spoon and gently drop into the broth, wait until it floats</li>
+    <li><b>Crispy pork & dough sticks</b> — add near the end, they soak up broth beautifully but get soggy fast</li>
     <li><b>Noodles</b> — save for the end! The broth is richest after cooking all the other ingredients</li>
-    <li><b>Dipping sauce</b> — mix your own: sesame paste + soy sauce + chili oil + garlic + vinegar + cilantro</li>
-    <li><b>Raw vs. cooked</b> — use the shared serving chopsticks to put raw food in the pot, and your own chopsticks to eat</li>
+    <li><b>Dipping sauce</b> — we have pre-made bags (original & spicy). Add vinegar, sesame oil, garlic, or wasabi to taste</li>
+    <li><b>Hygiene</b> — use the shared serving chopsticks to put raw food in the pot, your own chopsticks to eat</li>
     <li><b>Don't overcrowd</b> the pot — cook in small batches for best results</li>
   </ul>
 </div>
