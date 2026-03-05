@@ -1,7 +1,7 @@
 {
   "api_token": "83b47af04f17b264f501eaf84385a117edbd1b6d",
-  "api_version": "v2",
-  "api_base_url": "https://api.todoist.com/rest/v2",
+  "api_version": "v1",
+  "api_base_url": "https://api.todoist.com/api/v1",
   "setup_date": "2025-01-14T00:00:00",
   "default_settings": {
     "priority_mapping": {
