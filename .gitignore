@@ -19,6 +19,10 @@ archive/
 
 shopping/
 
+# Events目录（仅保留lunar_hotpot）
+events/*
+!events/lunar_hotpot/
+
 # Python缓存
 __pycache__/
 *.pyc

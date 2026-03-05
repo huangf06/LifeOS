@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hotpot Night — Expense Details</title>
+<style>
+  @page { size: A4; margin: 10mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    padding: 10mm;
+    max-width: 210mm;
+    font-size: 11px;
+  }
+  .header { text-align: center; margin-bottom: 12px; }
+  .header h1 { font-size: 22px; color: #c0392b; }
+  .header .sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .result-box {
+    background: #c0392b; color: white;
+    border-radius: 8px; padding: 12px;
+    text-align: center; margin-bottom: 12px;
+  }
+  .result-box .big { font-size: 32px; font-weight: bold; }
+  .result-box .small { font-size: 11px; opacity: 0.85; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+  th { padding: 5px 6px; text-align: left; font-size: 11px; }
+  td { padding: 4px 6px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🧧 Lunar New Year Hotpot Night</h1>
+  <div class="sub">Friday, 20 Feb 2026 · 13 people</div>
+</div>
+
+<div class="result-box">
+  <div class="small">Each person pays</div>
+  <div class="big">€14.30</div>
+  <div class="small">Shared €185.93 ÷ 13</div>
+</div>
+
+<table>
+  <thead>
+    <tr style="background:#c0392b;color:white;">
+      <th style="width:4%;">#</th>
+      <th style="width:28%;">Item</th>
+      <th style="width:14%;">Store</th>
+      <th style="width:6%;text-align:center;">Qty</th>
+      <th style="width:10%;text-align:right;">Unit €</th>
+      <th style="width:10%;text-align:right;">Total €</th>
+      <th style="width:10%;text-align:center;">Left</th>
+      <th style="width:18%;text-align:center;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background:#fff8f8;"><td>1</td><td>Rib Eye Beef Slice 500g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">12.95</td><td style="text-align:right;">25.89</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>2</td><td>Lamb Slice 400g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">8.97</td><td style="text-align:right;">17.93</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>3</td><td>Beef Meatballs 360g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">5.93</td><td style="text-align:right;">5.93</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>4</td><td>Mushroom Pork Balls 360g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">4.94</td><td style="text-align:right;">4.94</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>5</td><td>Shrimp Paste 250g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">3.94</td><td style="text-align:right;">3.94</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr><td>6</td><td>Tilapia Fillets 250g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">3.98</td><td style="text-align:right;">3.98</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>7</td><td>Beancurd Knots 200g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">2.79</td><td style="text-align:right;">5.58</td><td style="text-align:center;">2</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr><td>8</td><td>Fried Crispy Pork 300g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">6.93</td><td style="text-align:right;">6.93</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>9</td><td>Mini Dough Stick 225g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">2.79</td><td style="text-align:right;">5.58</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>10</td><td>Sweet Potato Noodle 200g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">2.33</td><td style="text-align:right;">4.65</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>11</td><td>Udon Noodle 200g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">0.59</td><td style="text-align:right;">1.18</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>12</td><td>Longkou Vermicelli 100g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">0.49</td><td style="text-align:right;">0.98</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>13</td><td>Spicy Oil Hot Pot Base 198g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">1.98</td><td style="text-align:right;">1.98</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>14</td><td>Tomato Hot Pot Base 200g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">2.78</td><td style="text-align:right;">2.78</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>15</td><td>Mushroom Hot Pot Base 150g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">2.78</td><td style="text-align:right;">2.78</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>16</td><td>Dipping Sauce Original 120g</td><td>Joybuy</td><td style="text-align:center;">4</td><td style="text-align:right;">1.19</td><td style="text-align:right;">4.75</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>17</td><td>Dipping Sauce Spicy 120g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">1.19</td><td style="text-align:right;">2.37</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>18</td><td>Crab Roe Xiao Long Bao 300g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">4.94</td><td style="text-align:right;">9.87</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>19</td><td>Pork Dumplings 400g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">4.94</td><td style="text-align:right;">4.94</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>20</td><td>Vegetable Gyoza 500g</td><td>Joybuy</td><td style="text-align:center;">2</td><td style="text-align:right;">2.49</td><td style="text-align:right;">4.97</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>21</td><td>Sunflower Seeds 350g</td><td>Joybuy</td><td style="text-align:center;">1</td><td style="text-align:right;">3.98</td><td style="text-align:right;">3.98</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr><td>22</td><td>Surimi Sticks 500g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">6.50</td><td style="text-align:right;">6.50</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>23</td><td>Tanghulu 75g</td><td>Dun Yong</td><td style="text-align:center;">3</td><td style="text-align:right;">2.55</td><td style="text-align:right;">7.65</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>24</td><td>Dried Kelp 200g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">4.75</td><td style="text-align:right;">4.75</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>25</td><td>Sesame Tangyuan 454g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">5.85</td><td style="text-align:right;">5.85</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>26</td><td>Chinese Cabbage 0.722kg</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">2.53</td><td style="text-align:right;">2.53</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>27</td><td>Wasabi Paste 43g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">2.20</td><td style="text-align:right;">2.20</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr><td>28</td><td>Fresh Garlic 250g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">1.95</td><td style="text-align:right;">1.95</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>29</td><td>Dried Black Fungus 100g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">5.60</td><td style="text-align:right;">5.60</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>30</td><td>Tangyuan Nuts Mix 400g</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">4.90</td><td style="text-align:right;">4.90</td><td style="text-align:center;">1</td><td style="text-align:center;color:#e67e22;">🔸 Leftover</td></tr>
+    <tr style="background:#fff8f8;"><td>31</td><td>Enoki Mushroom 100g</td><td>Dun Yong</td><td style="text-align:center;">2</td><td style="text-align:right;">1.50</td><td style="text-align:right;">3.00</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>32</td><td>Writing Brush</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">7.50</td><td style="text-align:right;">7.50</td><td style="text-align:center;">1</td><td style="text-align:center;color:#999;">⛔ Personal</td></tr>
+    <tr style="background:#fff8f8;"><td>33</td><td>Sesame Oil 125ml</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">2.80</td><td style="text-align:right;">2.80</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>34</td><td>Black Vinegar 250ml</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">2.35</td><td style="text-align:right;">2.35</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>35</td><td>Black Ink 100ml</td><td>Dun Yong</td><td style="text-align:center;">1</td><td style="text-align:right;">6.50</td><td style="text-align:right;">6.50</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>36</td><td>Chopsticks 10 pairs</td><td>Amazing Oriental</td><td style="text-align:center;">1</td><td style="text-align:right;">4.75</td><td style="text-align:right;">4.75</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>37</td><td>Dried Bean Curd Knot 300g</td><td>Amazing Oriental</td><td style="text-align:center;">1</td><td style="text-align:right;">3.45</td><td style="text-align:right;">3.45</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>38</td><td>Kitchen Paper</td><td>Action</td><td style="text-align:center;">1</td><td style="text-align:right;">2.18</td><td style="text-align:right;">2.18</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr style="background:#fff8f8;"><td>39</td><td>Colored Paper A4</td><td>Action</td><td style="text-align:center;">1</td><td style="text-align:right;">3.89</td><td style="text-align:right;">3.89</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+    <tr><td>40</td><td>Sake Kikumasa 1.8L</td><td>Shilla</td><td style="text-align:center;">1</td><td style="text-align:right;">29.80</td><td style="text-align:right;">29.80</td><td style="text-align:center;">—</td><td style="text-align:center;">✅ Shared</td></tr>
+  </tbody>
+</table>
+
+<table style="margin-top:4px;">
+  <tr style="background:#f5f5f5;"><td style="padding:5px 8px;width:70%;">Gross Total (40 items)</td><td style="padding:5px 8px;text-align:right;font-weight:bold;">€234.08</td></tr>
+  <tr style="color:#e67e22;"><td style="padding:5px 8px;">− Leftover food (10 items, host keeps)</td><td style="padding:5px 8px;text-align:right;">−€40.65</td></tr>
+  <tr style="color:#999;"><td style="padding:5px 8px;">− Writing brush (personal)</td><td style="padding:5px 8px;text-align:right;">−€7.50</td></tr>
+  <tr style="background:#27ae60;color:white;font-weight:bold;"><td style="padding:6px 8px;">Shared Total ÷ 13 people</td><td style="padding:6px 8px;text-align:right;font-size:16px;">€185.93 → €14.30 / person</td></tr>
+</table>
+
+<p style="text-align:center;margin-top:12px;font-size:16px;color:#c0392b;">Thanks everyone! 🧧🐍</p>
+
+</body>
+</html>
