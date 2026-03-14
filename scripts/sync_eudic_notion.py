@@ -232,9 +232,57 @@ class EudicSyncManager:
         print(f"\n✓ 总计获取到 {len(all_words)} 个单词")
         return all_words
 
+    def _fetch_existing_notion_titles(self) -> set:
+        """
+        从 Notion 查询已有的卡片标题（用于去重）
+
+        Returns:
+            已存在的卡片标题集合
+        """
+        print("🔍 查询 Notion 已有卡片...")
+        existing_titles = set()
+        start_cursor = None
+
+        url = f"https://api.notion.com/v1/data_sources/{self.data_source_id}/query"
+        headers = {
+            "Authorization": f"Bearer {self.notion_token}",
+            "Content-Type": "application/json",
+            "Notion-Version": "2025-09-03"
+        }
+
+        while True:
+            body = {"page_size": 100}
+            if start_cursor:
+                body["start_cursor"] = start_cursor
+
+            try:
+                response = requests.post(url, headers=headers, json=body, timeout=120)
+                if response.status_code != 200:
+                    print(f"   ⚠️  查询失败: {response.status_code}")
+                    break
+
+                data = response.json()
+                for page in data.get("results", []):
+                    props = page.get("properties", {})
+                    front = props.get("Front", {})
+                    titles = front.get("title", [])
+                    if titles:
+                        existing_titles.add(titles[0].get("plain_text", ""))
+
+                if data.get("has_more") and data.get("next_cursor"):
+                    start_cursor = data["next_cursor"]
+                else:
+                    break
+            except Exception as e:
+                print(f"   ⚠️  查询 Notion 出错: {e}")
+                break
+
+        print(f"   Notion 中已有 {len(existing_titles)} 张卡片")
+        return existing_titles
+
     def filter_new_words(self, words: List[Dict]) -> List[Dict]:
         """
-        过滤已同步的单词
+        过滤已同步的单词（同时检查本地状态和 Notion 已有卡片）
 
         Args:
             words: 完整单词列表
@@ -242,10 +290,16 @@ class EudicSyncManager:
         Returns:
             未同步的新单词列表
         """
+        # 从本地状态获取已同步列表
         synced_words = set(self.state.get("synced_words", []))
-        new_words = [w for w in words if w.get("word") not in synced_words]
 
-        print(f"📊 已同步: {len(synced_words)} | 新单词: {len(new_words)}")
+        # 从 Notion 查询已有卡片标题（防止 CI 中无状态文件导致重复）
+        existing_titles = self._fetch_existing_notion_titles()
+        all_known = synced_words | existing_titles
+
+        new_words = [w for w in words if w.get("word") not in all_known]
+
+        print(f"📊 本地已同步: {len(synced_words)} | Notion已有: {len(existing_titles)} | 新单词: {len(new_words)}")
         return new_words
 
     def word_to_notion_card(self, word_data: Dict) -> Dict:

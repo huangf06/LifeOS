@@ -231,41 +231,68 @@ class AnkiSyncManager:
         return all_cards
 
     def _query_database(self, data_source_id: str, filter_obj: Dict, db_name: str) -> List[Dict]:
-        """查询单个数据库"""
-        try:
-            # API 2025-09-03: 使用 data_sources 端点
-            url = f"https://api.notion.com/v1/data_sources/{data_source_id}/query"
-            headers = {
-                "Authorization": f"Bearer {self.notion_token}",
-                "Content-Type": "application/json",
-                "Notion-Version": "2025-09-03"
-            }
+        """查询单个数据库（支持分页和重试）"""
+        url = f"https://api.notion.com/v1/data_sources/{data_source_id}/query"
+        headers = {
+            "Authorization": f"Bearer {self.notion_token}",
+            "Content-Type": "application/json",
+            "Notion-Version": "2025-09-03"
+        }
 
-            response = requests.post(
-                url,
-                headers=headers,
-                json={"filter": filter_obj},
-                timeout=30
-            )
+        all_results = []
+        start_cursor = None
+        page_num = 0
 
-            # 打印详细错误信息（如果有）
-            if response.status_code != 200:
-                print(f"   ⚠️  {db_name} 查询失败: {response.status_code}")
-                print(f"   错误详情: {response.text}")
-                return []
+        while True:
+            page_num += 1
+            body = {"filter": filter_obj, "page_size": 100}
+            if start_cursor:
+                body["start_cursor"] = start_cursor
 
-            response.raise_for_status()
+            # 重试逻辑（最多 3 次，超时递增）
+            response = None
+            for attempt in range(3):
+                timeout = 60 * (attempt + 1)  # 60s, 120s, 180s
+                try:
+                    response = requests.post(
+                        url, headers=headers, json=body, timeout=timeout
+                    )
+                    if response.status_code == 200:
+                        break
+                    if response.status_code == 502:
+                        print(f"   ⚠️  {db_name} 502 错误，{2 ** attempt}秒后重试...")
+                        import time
+                        time.sleep(2 ** attempt)
+                        continue
+                    # 其他错误直接返回
+                    print(f"   ⚠️  {db_name} 查询失败: {response.status_code}")
+                    print(f"   错误详情: {response.text}")
+                    return all_results
+                except requests.exceptions.RequestException as e:
+                    if attempt < 2:
+                        print(f"   ⚠️  {db_name} 第{page_num}页请求失败 (尝试 {attempt+1}/3): {e}")
+                        import time
+                        time.sleep(2 ** attempt)
+                        continue
+                    print(f"   ⚠️  {db_name} 查询失败（已重试3次）: {e}")
+                    return all_results
+
+            if not response or response.status_code != 200:
+                return all_results
 
             data = response.json()
-            cards = data.get("results", [])
-            print(f"   从 {db_name} 找到 {len(cards)} 张卡片")
-            return cards
-        except requests.exceptions.RequestException as e:
-            print(f"   ⚠️  {db_name} 查询失败: {e}")
-            return []
-        except Exception as e:
-            print(f"   ⚠️  {db_name} 查询错误: {e}")
-            return []
+            results = data.get("results", [])
+            all_results.extend(results)
+
+            # 检查是否有下一页
+            if data.get("has_more") and data.get("next_cursor"):
+                start_cursor = data["next_cursor"]
+                print(f"   从 {db_name} 第{page_num}页获取 {len(results)} 张，继续翻页...")
+            else:
+                break
+
+        print(f"   从 {db_name} 找到 {len(all_results)} 张卡片")
+        return all_results
 
     def _extract_property(self, page: Dict, prop_name: str, prop_type: str) -> Optional[str]:
         """提取页面属性"""

@@ -10,9 +10,10 @@ notion-kit/.env
 # 任务历史数据和临时文件
 # data/
 data/*.apkg
-data/*_state.json
+data/anki_sync_state.json
 data/active_reviews.json
 data/review_state.json
+data/eudic_words_tmp.txt
 
 # 历史存档（已废弃的功能和文件，仅作历史参考）
 archive/
