@@ -30,6 +30,8 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+.pytest_cache/
+pytest-cache-files-*/
 
 # 临时文件
 *.tmp
