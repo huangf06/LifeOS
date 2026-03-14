@@ -12,7 +12,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     env:
-      ANKI_DATABASE_ID: ff0643bb-9c01-4ab5-9d2e-fe38a79451bb
+      ANKI_DATABASE_ID: bd6b87b8-d1f3-4603-928f-80eee7d030bb
 
     steps:
       - name: Checkout repository

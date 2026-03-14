@@ -21,6 +21,73 @@ from notion_client.errors import APIResponseError
 env_path = Path(__file__).parent.parent / "notion-kit" / ".env"
 load_dotenv(env_path)
 
+def build_database_schema(parent_page_id=None):
+    """Build the create-database payload for the current Notion API."""
+    properties = {
+        "Front": {
+            "title": {}
+        },
+        "Back": {
+            "rich_text": {}
+        },
+        "Deck": {
+            "select": {
+                "options": [
+                    {"name": "Vocabulary", "color": "blue"},
+                    {"name": "Concept", "color": "purple"},
+                    {"name": "Translation", "color": "green"},
+                    {"name": "Code", "color": "orange"},
+                    {"name": "General", "color": "gray"}
+                ]
+            }
+        },
+        "Tags": {
+            "multi_select": {
+                "options": [
+                    {"name": "English", "color": "blue"},
+                    {"name": "Quant", "color": "red"},
+                    {"name": "Programming", "color": "orange"},
+                    {"name": "Daily", "color": "green"}
+                ]
+            }
+        },
+        "Source": {
+            "url": {}
+        },
+        "Synced": {
+            "checkbox": {}
+        },
+        "Last Synced": {
+            "date": {}
+        }
+    }
+
+    schema = {
+        "parent": {},
+        "title": [
+            {
+                "type": "text",
+                "text": {
+                    "content": "Anki Cards"
+                }
+            }
+        ],
+        "initial_data_source": {
+            "name": "Anki Cards",
+            "properties": properties
+        }
+    }
+
+    if parent_page_id:
+        schema["parent"] = {
+            "type": "page_id",
+            "page_id": parent_page_id.replace("-", "")
+        }
+    else:
+        schema["parent"] = {"type": "workspace", "workspace": True}
+
+    return schema
+
 def create_anki_database(parent_page_id=None):
     """创建 Anki Cards 数据库
 
@@ -40,71 +107,15 @@ def create_anki_database(parent_page_id=None):
     print("🔨 正在创建 Anki Cards 数据库...")
     print()
 
-    # 数据库结构
-    database_schema = {
-        "parent": {},
-        "title": [
-            {
-                "type": "text",
-                "text": {
-                    "content": "Anki Cards"
-                }
-            }
-        ],
-        "properties": {
-            "Front": {
-                "title": {}
-            },
-            "Back": {
-                "rich_text": {}
-            },
-            "Deck": {
-                "select": {
-                    "options": [
-                        {"name": "Vocabulary", "color": "blue"},
-                        {"name": "Concept", "color": "purple"},
-                        {"name": "Translation", "color": "green"},
-                        {"name": "Code", "color": "orange"},
-                        {"name": "General", "color": "gray"}
-                    ]
-                }
-            },
-            "Tags": {
-                "multi_select": {
-                    "options": [
-                        {"name": "English", "color": "blue"},
-                        {"name": "Quant", "color": "red"},
-                        {"name": "Programming", "color": "orange"},
-                        {"name": "Daily", "color": "green"}
-                    ]
-                }
-            },
-            "Source": {
-                "url": {}
-            },
-            "Synced": {
-                "checkbox": {}
-            },
-            "Last Synced": {
-                "date": {}
-            }
-        }
-    }
+    database_schema = build_database_schema(parent_page_id)
 
     # 询问用户父页面 ID（如果没有提供）
     if parent_page_id:
-        # 移除可能的连字符
         parent_page_id = parent_page_id.replace("-", "")
-        database_schema["parent"] = {
-            "type": "page_id",
-            "page_id": parent_page_id
-        }
         print(f"📍 使用父页面 ID: {parent_page_id}")
     else:
-        # 使用工作区根目录
         print("📍 将在工作区根目录创建数据库")
         print("   (如需指定父页面，运行: python3 scripts/setup_anki_database.py <PAGE_ID>)")
-        database_schema["parent"] = {"type": "workspace", "workspace": True}
 
     print()
 
